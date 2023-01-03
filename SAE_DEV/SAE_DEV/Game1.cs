@@ -8,6 +8,7 @@ namespace SAE_DEV
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private SpriteBatch test;
 
         public Game1()
         {
