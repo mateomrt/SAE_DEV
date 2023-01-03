@@ -7,6 +7,14 @@ using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 
+using MonoGame.Extended.Content;
+using MonoGame.Extended.Serialization;
+using MonoGame.Extended.Sprites;
+
+using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled.Renderers;
+using System;
+
 namespace SAE_DEV
 {
     public class Game1 : Game
@@ -21,6 +29,10 @@ namespace SAE_DEV
         private Vector2 _positionPerso;
         private AnimatedSprite _perso;
 
+
+        private Vector2 _positionPerso;
+        private AnimatedSprite _perso;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -30,9 +42,11 @@ namespace SAE_DEV
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
-            Window.Title = "Test";
+            Window.Title = "Le jeu de la mort qui tue";
+
+            _positionPerso = new Vector2(20, 230);
 
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
@@ -53,6 +67,9 @@ namespace SAE_DEV
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
 
             // TODO: use this.Content to load your game content here
+
+            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
+            _perso = new AnimatedSprite(spriteSheet);
         }
 
         protected override void Update(GameTime gameTime)
@@ -70,6 +87,16 @@ namespace SAE_DEV
             _perso.Play("idle");
             _perso.Update(deltaTime);
            
+
+            // TIME
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+
+            // CHARACTER
+            _perso.Play("idle");
+
+            _perso.Update(deltaTime);
+
 
             base.Update(gameTime);
         }

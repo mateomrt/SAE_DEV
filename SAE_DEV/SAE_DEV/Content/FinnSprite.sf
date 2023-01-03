@@ -13,7 +13,7 @@
     "running": {
       "frames": [10,11,12,13,14,9],
       "isLooping": false,
-      "frameDuration": 0.09999997
+      "frameDuration": 0.2
     },
     "attack": {
       "frames": [23,24,25,26,27],
