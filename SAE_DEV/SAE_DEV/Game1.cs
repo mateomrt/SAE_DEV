@@ -21,6 +21,8 @@ namespace SAE_DEV
         {
             // TODO: Add your initialization logic here
 
+            Window.Title = "Test";
+
             base.Initialize();
         }
 
