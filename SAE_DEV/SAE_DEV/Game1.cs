@@ -7,12 +7,6 @@ using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 
-using MonoGame.Extended.Content;
-using MonoGame.Extended.Serialization;
-using MonoGame.Extended.Sprites;
-
-using MonoGame.Extended.Tiled;
-using MonoGame.Extended.Tiled.Renderers;
 using System;
 
 namespace SAE_DEV
@@ -21,7 +15,6 @@ namespace SAE_DEV
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private SpriteBatch test;
         private TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
         private Vector2 _positionZombie;
@@ -29,9 +22,6 @@ namespace SAE_DEV
         private Vector2 _positionPerso;
         private AnimatedSprite _perso;
 
-
-        private Vector2 _positionPerso;
-        private AnimatedSprite _perso;
 
         public Game1()
         {
@@ -44,7 +34,7 @@ namespace SAE_DEV
         {
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
-            Window.Title = "Le jeu de la mort qui tue";
+            Window.Title = "Sae Dev";
 
             _positionPerso = new Vector2(20, 230);
 
@@ -66,10 +56,6 @@ namespace SAE_DEV
             _tiledMap = Content.Load<TiledMap>("map1");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
 
-            // TODO: use this.Content to load your game content here
-
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
-            _perso = new AnimatedSprite(spriteSheet);
         }
 
         protected override void Update(GameTime gameTime)
@@ -80,24 +66,14 @@ namespace SAE_DEV
             _tiledMapRenderer.Update(gameTime);
 
             // TODO: Add your update logic here
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
             // TODO: Add your update logic here
             _Zombielvl1.Play("idle");
-            _Zombielvl1.Update(deltaTime);
             _perso.Play("idle");
+            _Zombielvl1.Update(deltaTime);
             _perso.Update(deltaTime);
            
-
-            // TIME
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-
-            // CHARACTER
-            _perso.Play("idle");
-
-            _perso.Update(deltaTime);
-
-
             base.Update(gameTime);
         }
 
