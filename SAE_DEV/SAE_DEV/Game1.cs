@@ -33,7 +33,7 @@ namespace SAE_DEV
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
-
+            
         protected override void Initialize()
         {
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
