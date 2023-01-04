@@ -13,6 +13,7 @@ namespace SAE_DEV
 {
     public class Game1 : Game
     {
+        private KeyboardState _keyboardState;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private TiledMap _tiledMap;
@@ -20,7 +21,10 @@ namespace SAE_DEV
         private Vector2 _positionZombie;
         private AnimatedSprite _Zombielvl1;
         private Vector2 _positionPerso;
+        private int _vitessePerso;
         private AnimatedSprite _perso;
+        private string _animationPerso;
+
 
 
         public Game1()
@@ -36,12 +40,11 @@ namespace SAE_DEV
 
             Window.Title = "Sae Dev";
 
-            _positionPerso = new Vector2(20, 230);
-
-            GraphicsDevice.BlendState = BlendState.AlphaBlend;
-
+            _positionPerso = new Vector2(400, 400);
+            _vitessePerso = 100;
             _positionZombie = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-            _positionPerso = new Vector2(GraphicsDevice.Viewport.Width / 2 + 50, GraphicsDevice.Viewport.Height / 2);
+
+
             base.Initialize();
         }
 
@@ -69,10 +72,42 @@ namespace SAE_DEV
             
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
             // TODO: Add your update logic here
+            _keyboardState = Keyboard.GetState();
             _Zombielvl1.Play("idle");
-            _perso.Play("idle");
+            _animationPerso = "idle";
+            Vector2 direction = Vector2.Zero;
+
             _Zombielvl1.Update(deltaTime);
-           
+
+            if (_keyboardState.IsKeyDown(Keys.Right))
+            {
+                _animationPerso = "running";
+                direction.X += _vitessePerso;
+            }
+            if (_keyboardState.IsKeyDown(Keys.Up))
+            {
+                _animationPerso = "running";
+                direction.Y -= _vitessePerso;
+            }
+            if (_keyboardState.IsKeyDown(Keys.Down))
+            {
+                _animationPerso = "running";
+                direction.Y += _vitessePerso;
+            }
+            if (_keyboardState.IsKeyDown(Keys.Left))
+            {
+                _animationPerso = "running";
+                direction.X -= _vitessePerso;
+            }
+            if (direction == Vector2.Zero)
+            {
+                return;
+            }
+            _positionPerso += direction * deltaTime;
+            _perso.Play(_animationPerso); // une des animations définies dans « persoAnimation.sf »
+            _perso.Update(deltaTime); // temps écoulé
+
+
             base.Update(gameTime);
         }
 
