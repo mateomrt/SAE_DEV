@@ -104,6 +104,11 @@ namespace SAE_DEV
             this.VitesseZombie = 100;
 
         }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_spriteZombie, _positionZombie);
+
+        }
 
     }
 
