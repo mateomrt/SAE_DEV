@@ -26,6 +26,7 @@ namespace SAE_DEV
         private int _vitessePerso;
         private AnimatedSprite _perso;
         private string _animationPerso;
+        Zombie zombielvl1;
 
 
 
@@ -45,7 +46,7 @@ namespace SAE_DEV
             _positionPerso = new Vector2(400, 400);
             _vitessePerso = 100;
             _positionZombie = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-
+            
 
             base.Initialize();
         }
