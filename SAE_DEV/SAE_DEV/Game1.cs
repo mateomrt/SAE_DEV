@@ -72,7 +72,6 @@ namespace SAE_DEV
             _Zombielvl1.Play("idle");
             _perso.Play("idle");
             _Zombielvl1.Update(deltaTime);
-            _perso.Update(deltaTime);
            
             base.Update(gameTime);
         }
