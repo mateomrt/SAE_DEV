@@ -78,6 +78,8 @@ namespace SAE_DEV
             Vector2 direction = Vector2.Zero;
 
             _Zombielvl1.Update(deltaTime);
+            _perso.Update(deltaTime);
+           
 
             if (_keyboardState.IsKeyDown(Keys.Right))
             {
