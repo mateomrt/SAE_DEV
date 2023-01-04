@@ -1,30 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended.Tiled;
-using MonoGame.Extended.Tiled.Renderers;
-using MonoGame.Extended.Content;
-using MonoGame.Extended.Serialization;
-using MonoGame.Extended.Sprites;
-
-using System;
+using MonoGame.Extended.Screens;
+using MonoGame.Extended.Screens.Transitions;
+using System.Xml.Linq;
+using SAE_DEV.Screens;
 
 namespace SAE_DEV
 {
     public class Game1 : Game
     {
-        private KeyboardState _keyboardState;
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-        private TiledMap _tiledMap;
-        private TiledMapRenderer _tiledMapRenderer;
-        private Vector2 _positionZombie;
-        private AnimatedSprite _Zombielvl1;
-        private Vector2 _positionPerso;
-        private int _vitessePerso;
-        private AnimatedSprite _perso;
-        private string _animationPerso;
+        public SpriteBatch SpriteBatch { get; private set; }
 
+        private ScreenManager _screenManager;
 
 
         public Game1()
@@ -36,98 +25,58 @@ namespace SAE_DEV
 
         protected override void Initialize()
         {
-            GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            // TODO: Add your initialization logic here
 
-            Window.Title = "Sae Dev";
-
-            _positionPerso = new Vector2(400, 400);
-            _vitessePerso = 100;
-            _positionZombie = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-
+            _screenManager = new ScreenManager();
+            
 
             base.Initialize();
         }
 
+        public void LoadScreen(GameScreen screen)
+        {
+            _screenManager.LoadScreen(screen, new FadeTransition(GraphicsDevice, Color.Black, .5f));
+
+        }
+
+        public void LoadMenu()
+        {
+            LoadScreen(new Menu(this));
+        }
+        public void LoadMonde()
+        {
+            LoadScreen(new Monde(this));
+        }
+
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("ZombieToast_50.sf", new JsonContentLoader());
-            _Zombielvl1 = new AnimatedSprite(spriteSheet);
-            SpriteSheet spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
-            _perso = new AnimatedSprite(spritePerso);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _tiledMap = Content.Load<TiledMap>("map1");
-            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
 
+            // TODO: use this.Content to load your game content here
+            LoadMenu();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            _tiledMapRenderer.Update(gameTime);
 
             // TODO: Add your update logic here
-            
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
-            // TODO: Add your update logic here
-            _keyboardState = Keyboard.GetState();
-            _Zombielvl1.Play("idle");
-            _animationPerso = "idle";
-            Vector2 direction = Vector2.Zero;
 
-            _Zombielvl1.Update(deltaTime);
-            _perso.Update(deltaTime);
-           
+            _screenManager.Update(gameTime);
 
-            if (_keyboardState.IsKeyDown(Keys.Right))
-            {
-                _animationPerso = "running";
-                direction.X += _vitessePerso;
-            }
-            if (_keyboardState.IsKeyDown(Keys.Up))
-            {
-                _animationPerso = "running";
-                direction.Y -= _vitessePerso;
-            }
-            if (_keyboardState.IsKeyDown(Keys.Down))
-            {
-                _animationPerso = "running";
-                direction.Y += _vitessePerso;
-            }
-            if (_keyboardState.IsKeyDown(Keys.Left))
-            {
-                _animationPerso = "running";
-                direction.X -= _vitessePerso;
-            }
-            if (direction == Vector2.Zero)
-            {
-                return;
-            }
-            _positionPerso += direction * deltaTime;
-            _perso.Play(_animationPerso); // une des animations définies dans « persoAnimation.sf »
-            _perso.Update(deltaTime); // temps écoulé
-
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-
-            _tiledMapRenderer.Draw();
-
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_Zombielvl1, _positionZombie);
-            _spriteBatch.End();
 
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_perso, _positionPerso);
-            _spriteBatch.End();
+            _screenManager.Draw(gameTime);
+
             base.Draw(gameTime);
         }
     }
