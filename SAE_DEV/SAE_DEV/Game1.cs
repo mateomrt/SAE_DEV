@@ -13,6 +13,8 @@ namespace SAE_DEV
 {
     public class Game1 : Game
     {
+        public int MAP1_TAILLE = 800;
+        public int MAP2_TAILLE = 560;
         private KeyboardState _keyboardState;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -80,7 +82,7 @@ namespace SAE_DEV
             _Zombielvl1.Update(deltaTime);
             _perso.Update(deltaTime);
            
-
+            //Deplacement du perso
             if (_keyboardState.IsKeyDown(Keys.Right))
             {
                 _animationPerso = "running";
