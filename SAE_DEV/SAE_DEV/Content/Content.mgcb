@@ -35,6 +35,23 @@
 /processor:TiledMapProcessor
 /build:map1.tmx
 
+#begin map2.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:map2.tmx
+
+#begin roguelikeSheet_transparent.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:roguelikeSheet_transparent.png
+
 #begin tilemap_packed.png
 /importer:TextureImporter
 /processor:TextureProcessor
