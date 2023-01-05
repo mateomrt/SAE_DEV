@@ -93,7 +93,13 @@ namespace SAE_DEV
         {
             _vitesseZombie = 100;
         }
-       
+
+        public void LoadContent(Game game)
+        {
+            SpriteSheet spritezombie = game.Content.Load<SpriteSheet>("ZombieToast_50.sf", new JsonContentLoader());
+            _spriteZombie = new AnimatedSprite(spritezombie);
+        }
+
         public void Update(float deltaTime)
         {
             _spriteZombie.Play("idle");

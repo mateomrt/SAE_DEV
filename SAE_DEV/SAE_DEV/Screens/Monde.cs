@@ -18,6 +18,7 @@ namespace SAE_DEV.Screens
         private new Game1 Game => (Game1)base.Game;
         Perso character;
         private KeyboardState _keyboardState;
+        Zombie zombielvl1;
 
         public int MAP1_TAILLE = 800;
         public int MAP2_TAILLE = 560;
@@ -33,6 +34,7 @@ namespace SAE_DEV.Screens
         {
             _tiledMap = Content.Load<TiledMap>("map1");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
+            zombielvl1.LoadContent(Game);
             base.LoadContent();
         }
 
@@ -41,6 +43,8 @@ namespace SAE_DEV.Screens
             character = new Perso();
             character.Position = new Vector2(100, 200);
             character.LoadContent(Game);
+            zombielvl1 = new Zombie();
+            zombielvl1.PositionZombie = new Vector2(200, 200);
             base.Initialize();
         }
 
@@ -51,6 +55,7 @@ namespace SAE_DEV.Screens
             _tiledMapRenderer.Draw();
 
             character.Draw(Game.SpriteBatch);
+            zombielvl1.Draw(Game.SpriteBatch);
         }
 
         public override void Update(GameTime gameTime)
