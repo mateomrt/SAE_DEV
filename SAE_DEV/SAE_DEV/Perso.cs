@@ -65,7 +65,7 @@ namespace SAE_DEV
 
             float movement = vitesse_mvt * deltaTime;
             //Vector2 moveDirection = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
-            _position += movement * direction;
+            _position += deltaTime * direction;
 
             _spritePerso.Play(_animationPerso);
             _spritePerso.Update(deltaTime);
