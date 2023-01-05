@@ -93,15 +93,11 @@ namespace SAE_DEV
         {
             _vitesseZombie = 100;
         }
-        public void LoadContent(Game game)
-        {
-            SpriteSheet finnAT = game.Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
-            _spriteZombie = new AnimatedSprite(finnAT);
-        }
-        public void Update(float delaTime)
+       
+        public void Update(float deltaTime)
         {
             _spriteZombie.Play("idle");
-            _spriteZombie.Update(delaTime);
+            _spriteZombie.Update(deltaTime);
         }
         public void Draw(SpriteBatch _spriteBatch)
         {

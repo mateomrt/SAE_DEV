@@ -20,8 +20,6 @@ namespace SAE_DEV
         private SpriteBatch _spriteBatch;
         private TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
-        private Vector2 _positionZombie;
-        private AnimatedSprite _Zombielvl1;
         private Vector2 _positionPerso;
         private int _vitessePerso;
         private AnimatedSprite _perso;
@@ -43,10 +41,9 @@ namespace SAE_DEV
 
             Window.Title = "Sae Dev";
 
-            _positionPerso = new Vector2(400, 400);
-            _vitessePerso = 100;
             //Zombie
             zombielvl1 = new Zombie();
+            zombielvl1.PositionZombie = new Vector2(200,200);
 
             base.Initialize();
         }
@@ -56,10 +53,9 @@ namespace SAE_DEV
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("ZombieToast_50.sf", new JsonContentLoader());
             zombielvl1.SpriteZombie = new AnimatedSprite(spriteSheet);
-            
-            
-            SpriteSheet spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
-            _perso = new AnimatedSprite(spritePerso);
+
+            SpriteSheet perso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
+            _perso = new AnimatedSprite(perso);
 
             _tiledMap = Content.Load<TiledMap>("map1");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
@@ -78,13 +74,12 @@ namespace SAE_DEV
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
             // TODO: Add your update logic here
             _keyboardState = Keyboard.GetState();
-            _Zombielvl1.Play("idle");
-            _animationPerso = "idle";
             Vector2 direction = Vector2.Zero;
 
-            _Zombielvl1.Update(deltaTime);
+            zombielvl1.Update(deltaTime);
             _perso.Update(deltaTime);
            
+            
             //Deplacement du perso
             if (_keyboardState.IsKeyDown(Keys.Right))
             {
@@ -126,13 +121,6 @@ namespace SAE_DEV
 
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_Zombielvl1, _positionZombie);
-            _spriteBatch.End();
-
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_perso, _positionPerso);
-            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
