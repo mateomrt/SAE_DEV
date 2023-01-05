@@ -52,6 +52,8 @@ namespace SAE_DEV
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("ZombieToast_50.sf", new JsonContentLoader());
             zombielvl1.SpriteZombie = new AnimatedSprite(spriteSheet);
 
