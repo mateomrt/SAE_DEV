@@ -19,6 +19,7 @@ namespace SAE_DEV.Screens
         Perso character;
         private KeyboardState _keyboardState;
         Zombie zombielvl1;
+        IAZombie iazombie;
 
         public int MAP1_TAILLE = 800;
         public int MAP2_TAILLE = 560;
@@ -44,7 +45,8 @@ namespace SAE_DEV.Screens
             character.Position = new Vector2(100, 200);
             character.LoadContent(Game);
             zombielvl1 = new Zombie();
-            zombielvl1.PositionZombie = new Vector2(200, 200);
+            zombielvl1.PositionZombie = new Vector2(300, 400);
+            iazombie = new IAZombie(50, character, zombielvl1);
             base.Initialize();
         }
 
@@ -64,10 +66,13 @@ namespace SAE_DEV.Screens
             _tiledMapRenderer.Update(gameTime);
             _keyboardState = Keyboard.GetState();
             character.Update(deltaTime);
+            iazombie.Update(gameTime);
+
             if (Keyboard.GetState().IsKeyDown(Keys.Y))
             {
                 Game.LoadMenu();
             }
+            
         }
     }
 }

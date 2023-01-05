@@ -37,7 +37,9 @@ namespace SAE_DEV
             direction.Normalize();
 
             zombie.PositionZombie += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        
         }
+
 
 
     }
