@@ -61,6 +61,8 @@ namespace SAE_DEV
         {
 
             // TODO: Add your update logic here
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Exit();
 
             _screenManager.Update(gameTime);
 

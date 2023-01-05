@@ -15,6 +15,7 @@ namespace SAE_DEV.Screens
     {
         private new Game1 Game => (Game1)base.Game;
         Perso character;
+        private KeyboardState _keyboardState;
 
         public Monde(Game1 game) : base(game)
         {
@@ -25,6 +26,7 @@ namespace SAE_DEV.Screens
         {
             character = new Perso();
             character.Position = new Vector2(100, 200);
+            character.LoadContent(Game);
             base.Initialize();
         }
 
@@ -39,6 +41,7 @@ namespace SAE_DEV.Screens
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             character.Update(deltaTime);
+            _keyboardState = Keyboard.GetState();
             if (Keyboard.GetState().IsKeyDown(Keys.Y))
             {
                 Game.LoadMenu();
