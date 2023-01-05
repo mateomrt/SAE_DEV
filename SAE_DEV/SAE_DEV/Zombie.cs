@@ -98,10 +98,15 @@ namespace SAE_DEV
         }
 
 
-        public void Initialize(Game game1)
+        public void Initialize(Game game)
         {
             this.PositionZombie = new Vector2(200, 200);
             this.VitesseZombie = 100;
+
+        }
+
+        public void LoadContent(Game game)
+        {
 
         }
         public void Draw(SpriteBatch spriteBatch)
