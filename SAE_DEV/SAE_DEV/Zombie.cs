@@ -101,7 +101,9 @@ namespace SAE_DEV
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
+            _spriteBatch.Begin();
             _spriteBatch.Draw(_spriteZombie, _positionZombie);
+            _spriteBatch.End();
         }
 
     }
