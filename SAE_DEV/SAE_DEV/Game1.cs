@@ -38,7 +38,8 @@ namespace SAE_DEV
         protected override void Initialize()
         {
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
-
+            _vitessePerso = 100;
+            _positionPerso = new Vector2(200, 200);
             Window.Title = "Sae Dev";
 
             //Zombie
@@ -119,6 +120,10 @@ namespace SAE_DEV
 
             _tiledMapRenderer.Draw();
             zombielvl1.Draw(_spriteBatch);
+
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_perso, _positionPerso);
+            _spriteBatch.End();
 
             // TODO: Add your drawing code here
             base.Draw(gameTime);
