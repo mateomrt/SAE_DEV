@@ -20,7 +20,7 @@ namespace SAE_DEV
 
         private Vector2 _position;
         private float vitesse_mvt;
-        private float direction;
+        private Vector2 direction;
 
         private string _animationPerso;
 
@@ -47,25 +47,25 @@ namespace SAE_DEV
             _currentkeyboardState = Keyboard.GetState();
 
             if (_currentkeyboardState.IsKeyDown(Keys.Left)) {
-                direction = MathHelper.ToRadians(-90);
+                direction.X -= vitesse_mvt; 
                 _animationPerso = "running";
             }
             if (_currentkeyboardState.IsKeyDown(Keys.Right)) {
-                direction = MathHelper.ToRadians(90);
+                direction.X += vitesse_mvt;
                 _animationPerso = "running";
             }
             if (_currentkeyboardState.IsKeyDown(Keys.Up)) {
-                direction = MathHelper.ToRadians(0);
+                direction.Y += vitesse_mvt;
                 _animationPerso = "running";
             }
             if (_currentkeyboardState.IsKeyDown(Keys.Down)) {
-                direction = MathHelper.ToRadians(180);
+                direction.Y -= vitesse_mvt ;
                 _animationPerso = "running";
             }
 
             float movement = vitesse_mvt * deltaTime;
-            Vector2 moveDirection = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
-            _position += movement * moveDirection;
+            //Vector2 moveDirection = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
+            _position += movement * direction;
 
             _spritePerso.Play(_animationPerso);
             _spritePerso.Update(deltaTime);

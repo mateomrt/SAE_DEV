@@ -42,11 +42,11 @@ namespace SAE_DEV.Screens
         public override void Initialize()
         {
             character = new Perso();
-            character.Position = new Vector2(100, 200);
+            character.Position = new Vector2(140, 210);
             character.LoadContent(Game);
             zombielvl1 = new Zombie();
             zombielvl1.PositionZombie = new Vector2(300, 400);
-            iazombie = new IAZombie(50, character, zombielvl1);
+            iazombie = new IAZombie(75, character, zombielvl1);
             base.Initialize();
         }
 
