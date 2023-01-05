@@ -7,9 +7,8 @@ using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.ViewportAdapters;
-using Comora;
-
 using System;
+using MonoGame.Extended;
 
 namespace SAE_DEV
 {
@@ -29,8 +28,12 @@ namespace SAE_DEV
         private int _vitessePerso;
         private AnimatedSprite _perso;
         private string _animationPerso;
+        private OrthographicCamera _camera;
+        private float _positionCameraX;
+        private float _positionCameraY;
+        private int _screenWidth;
+        private int _screenHeight;
 
-        private Camera _camera;
 
 
 
@@ -49,18 +52,24 @@ namespace SAE_DEV
             //_graphics.PreferredBackBufferHeight = 800;   // set this value to the desired height of your window
             //_graphics.ApplyChanges();
 
-            // CAMERA
-            _camera = new Camera(_graphics.GraphicsDevice);
-            
+
+
 
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             Window.Title = "Sae Dev";
 
-            _positionPerso = new Vector2(150, 50);
+            _positionPerso = new Vector2(150, 250);
             _vitessePerso = 150;
             _positionZombie = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 
+            _screenWidth = 1280;
+            _screenHeight = 720;
+
+            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, _screenWidth, _screenHeight);
+            _camera = new OrthographicCamera(viewportAdapter);
+            _camera.Position = new Vector2(_screenWidth,_screenHeight);
+            _camera.ZoomIn(1.5f);
 
             base.Initialize();
         }
@@ -75,7 +84,7 @@ namespace SAE_DEV
             SpriteSheet spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spritePerso);
 
-            _tiledMap = Content.Load<TiledMap>("map2");
+            _tiledMap = Content.Load<TiledMap>("map1");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("Batiment");
 
@@ -92,17 +101,32 @@ namespace SAE_DEV
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _tiledMapRenderer.Update(gameTime);
+            
 
 
             _Zombielvl1.Play("idle");
             
             _animationPerso = "idle";
-            
 
-            
+            _positionCameraX = _positionPerso.X;
+            _positionCameraY = _positionPerso.Y;
 
-            //Deplacement du perso
+            // En a gauche
+            if (_positionPerso.X < _screenWidth / 5)
+                _positionCameraX = _screenWidth / 5;
+            // A droite
+            if (_positionPerso.X > (MAP1_TAILLE - _screenWidth / 5))
+                _positionCameraX = (MAP1_TAILLE - _screenWidth / 5);
+            //en haut
+            if (_positionPerso.Y < _screenHeight / 5)
+                _positionCameraY = _screenHeight / 5;
+            // en bas
+            if (_positionPerso.Y > (MAP1_TAILLE - _screenHeight / 5))
+                _positionCameraY = (MAP1_TAILLE - _screenHeight / 5);
+
+
+
+            //Deplacement du perso + collisions
             if (_keyboardState.IsKeyDown(Keys.Right))
             {
                 ushort tx = (ushort)(_positionPerso.X/ _tiledMap.TileWidth +0.5);
@@ -111,7 +135,6 @@ namespace SAE_DEV
                 if (!IsCollision(tx, ty))
                 {
                     _positionPerso.X += walkSpeed;
-                    _camera.Position += new Vector2(walkSpeed,0);
                 }
             }
             if (_keyboardState.IsKeyDown(Keys.Up))
@@ -122,7 +145,6 @@ namespace SAE_DEV
                 if (!IsCollision(tx, ty))
                 {
                     _positionPerso.Y -= walkSpeed;
-                    _camera.Position = _positionPerso;
                 }
                 
             }
@@ -134,7 +156,6 @@ namespace SAE_DEV
                 if (!IsCollision(tx, ty))
                 {
                     _positionPerso.Y += walkSpeed;
-                    _camera.Position = _positionPerso;
                 }
                 
             }
@@ -146,18 +167,18 @@ namespace SAE_DEV
                 if (!IsCollision(tx, ty))
                 {
                     _positionPerso.X -= walkSpeed;
-                    _camera.Position = _positionPerso;
                 }
             }
 
-            
+            _camera.LookAt(new Vector2(_positionCameraX, _positionCameraY));
+
+
             _perso.Play(_animationPerso); // on joue l'animation du perso
             _perso.Update(deltaTime); // temps écoulé
+            _tiledMapRenderer.Update(gameTime);
             _Zombielvl1.Update(deltaTime);
 
-            //CAMERA
-            //_camera.Position = _positionPerso;
-            _camera.Update(gameTime);
+            
             
 
 
@@ -168,22 +189,18 @@ namespace SAE_DEV
         {
             _graphics.GraphicsDevice.Clear(Color.Black);
 
+            var transformMatrix = _camera.GetViewMatrix();
             
-            _spriteBatch.Begin();
-            _tiledMapRenderer.Draw();
+            _spriteBatch.Begin(transformMatrix: transformMatrix);
             
+            _tiledMapRenderer.Draw(transformMatrix);
             
+
             _spriteBatch.Draw(_Zombielvl1, _positionZombie);
-
+             _spriteBatch.Draw(_perso, _positionPerso);
             _spriteBatch.End();
 
 
-            _spriteBatch.Begin(_camera);
-            _spriteBatch.Draw(_perso, _positionPerso);
-            _spriteBatch.End();
-            
-
-            
 
 
 
@@ -202,6 +219,29 @@ namespace SAE_DEV
             return false;
         }
 
-        
+        private Vector2 GetMovementDirection()
+        {
+            var movementDirection = Vector2.Zero;
+            var state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Down))
+            {
+                movementDirection += Vector2.UnitY;
+            }
+            if (state.IsKeyDown(Keys.Up))
+            {
+                movementDirection -= Vector2.UnitY;
+            }
+            if (state.IsKeyDown(Keys.Left))
+            {
+                movementDirection -= Vector2.UnitX;
+            }
+            if (state.IsKeyDown(Keys.Right))
+            {
+                movementDirection += Vector2.UnitX;
+            }
+            return movementDirection;
+        }
+
+
     }
 }
