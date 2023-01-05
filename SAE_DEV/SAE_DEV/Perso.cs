@@ -19,8 +19,8 @@ namespace SAE_DEV
         private AnimatedSprite _spritePerso;
 
         private Vector2 _position;
-        private float vitesse_mvt;
-        private float direction;
+        private double vitesse_mvt = 100;
+        private Vector2 direction;
 
         private string _animationPerso;
 
@@ -30,11 +30,7 @@ namespace SAE_DEV
 
 
         public Vector2 Position { get => _position; set => _position = value; }
-
-        public void Initialize(Game game)
-        {   
-            vitesse_mvt = 100;
-        }
+    
         public void LoadContent(Game game)
         {
             SpriteSheet finnAT = game.Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
@@ -42,31 +38,9 @@ namespace SAE_DEV
         }
         public void Update(float deltaTime)
         {
+            _animationPerso = "idle";
 
-            _previouskeyboardState = _currentkeyboardState;
-            _currentkeyboardState = Keyboard.GetState();
-
-            if (_currentkeyboardState.IsKeyDown(Keys.Left)) {
-                direction = MathHelper.ToRadians(-90);
-                _animationPerso = "running";
-            }
-            if (_currentkeyboardState.IsKeyDown(Keys.Right)) {
-                direction = MathHelper.ToRadians(90);
-                _animationPerso = "running";
-            }
-            if (_currentkeyboardState.IsKeyDown(Keys.Up)) {
-                direction = MathHelper.ToRadians(0);
-                _animationPerso = "running";
-            }
-            if (_currentkeyboardState.IsKeyDown(Keys.Down)) {
-                direction = MathHelper.ToRadians(180);
-                _animationPerso = "running";
-            }
-
-            float movement = vitesse_mvt * deltaTime;
-            Vector2 moveDirection = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
-            _position += movement * moveDirection;
-
+           
             _spritePerso.Play(_animationPerso);
             _spritePerso.Update(deltaTime);
         }

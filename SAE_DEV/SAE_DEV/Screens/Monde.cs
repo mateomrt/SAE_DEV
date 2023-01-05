@@ -39,7 +39,7 @@ namespace SAE_DEV.Screens
         public override void Initialize()
         {
             character = new Perso();
-            character.Position = new Vector2(100, 200);
+            character.Position = new Vector2(110, 210);
             character.LoadContent(Game);
             base.Initialize();
         }

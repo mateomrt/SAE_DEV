@@ -21,6 +21,7 @@ namespace SAE_DEV
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            _graphics.IsFullScreen = true;
         }
 
         protected override void Initialize()
@@ -28,7 +29,6 @@ namespace SAE_DEV
             // TODO: Add your initialization logic here
 
             _screenManager = new ScreenManager();
-            
 
             base.Initialize();
         }
