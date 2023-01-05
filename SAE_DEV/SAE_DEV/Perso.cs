@@ -19,10 +19,13 @@ namespace SAE_DEV
         private AnimatedSprite _spritePerso;
 
         private Vector2 _position;
-        private int vitesse_mvt;
+        private float vitesse_mvt;
+        private float direction;
 
         private string _animationPerso;
-        private KeyboardState _keyboardState;
+
+        private KeyboardState _previouskeyboardState;
+        private KeyboardState _currentkeyboardState;
 
 
 
@@ -39,35 +42,31 @@ namespace SAE_DEV
         }
         public void Update(float deltaTime)
         {
-            _keyboardState = Keyboard.GetState();
-            _animationPerso = "idle";
-            Vector2 direction = Vector2.Zero;
 
-            if (_keyboardState.IsKeyDown(Keys.Right))
-            {
+            _previouskeyboardState = _currentkeyboardState;
+            _currentkeyboardState = Keyboard.GetState();
+
+            if (_currentkeyboardState.IsKeyDown(Keys.Left)) {
+                direction = MathHelper.ToRadians(-90);
                 _animationPerso = "running";
-                direction.X += vitesse_mvt;
             }
-            if (_keyboardState.IsKeyDown(Keys.Up))
-            {
+            if (_currentkeyboardState.IsKeyDown(Keys.Right)) {
+                direction = MathHelper.ToRadians(90);
                 _animationPerso = "running";
-                direction.Y -= vitesse_mvt;
             }
-            if (_keyboardState.IsKeyDown(Keys.Down))
-            {
+            if (_currentkeyboardState.IsKeyDown(Keys.Up)) {
+                direction = MathHelper.ToRadians(0);
                 _animationPerso = "running";
-                direction.Y += vitesse_mvt;
             }
-            if (_keyboardState.IsKeyDown(Keys.Left))
-            {
+            if (_currentkeyboardState.IsKeyDown(Keys.Down)) {
+                direction = MathHelper.ToRadians(180);
                 _animationPerso = "running";
-                direction.X -= vitesse_mvt;
             }
-            if (direction == Vector2.Zero)
-            {
-                return;
-            }
-            _position += direction * deltaTime;
+
+            float movement = vitesse_mvt * deltaTime;
+            Vector2 moveDirection = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
+            _position += movement * moveDirection;
+
             _spritePerso.Play(_animationPerso);
             _spritePerso.Update(deltaTime);
         }

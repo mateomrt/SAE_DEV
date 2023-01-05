@@ -11,6 +11,7 @@ using MonoGame.Extended.Tiled.Renderers;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
+using System.Reflection.Metadata;
 
 
 namespace SAE_DEV
