@@ -23,14 +23,6 @@ namespace SAE_DEV
         private string _animationZombie;
         private Vector2 _directionZombie;
 
-        public Zombie(Vector2 positionZombie, int vitesseZombie, AnimatedSprite spriteZombie, string animationZombie, Vector2 directionZombie)
-        {
-            this.PositionZombie = positionZombie;
-            this.VitesseZombie = vitesseZombie;
-            this.SpriteZombie = spriteZombie;
-            this.AnimationZombie = animationZombie;
-            this.DirectionZombie = directionZombie;
-        }
 
         public Vector2 PositionZombie
         {
@@ -97,22 +89,23 @@ namespace SAE_DEV
             }
         }
 
-
         public void Initialize(Game game)
         {
-            this.PositionZombie = new Vector2(200, 200);
-            this.VitesseZombie = 100;
-
+            _vitesseZombie = 100;
         }
-
         public void LoadContent(Game game)
         {
-
+            SpriteSheet finnAT = game.Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
+            _spriteZombie = new AnimatedSprite(finnAT);
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Update(float delaTime)
         {
-            spriteBatch.Draw(_spriteZombie, _positionZombie);
-
+            _spriteZombie.Play("idle");
+            _spriteZombie.Update(delaTime);
+        }
+        public void Draw(SpriteBatch _spriteBatch)
+        {
+            _spriteBatch.Draw(_spriteZombie, _positionZombie);
         }
 
     }
