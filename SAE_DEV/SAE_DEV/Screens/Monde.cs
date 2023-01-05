@@ -62,8 +62,8 @@ namespace SAE_DEV.Screens
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _tiledMapRenderer.Update(gameTime);
-            character.Update(deltaTime);
             _keyboardState = Keyboard.GetState();
+            character.Update(deltaTime);
             if (Keyboard.GetState().IsKeyDown(Keys.Y))
             {
                 Game.LoadMenu();
