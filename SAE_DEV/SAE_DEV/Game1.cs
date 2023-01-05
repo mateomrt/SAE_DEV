@@ -45,8 +45,8 @@ namespace SAE_DEV
 
             _positionPerso = new Vector2(400, 400);
             _vitessePerso = 100;
-            _positionZombie = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-            
+            //Zombie
+            zombielvl1 = new Zombie();
 
             base.Initialize();
         }
@@ -55,7 +55,9 @@ namespace SAE_DEV
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("ZombieToast_50.sf", new JsonContentLoader());
-            _Zombielvl1 = new AnimatedSprite(spriteSheet);
+            zombielvl1.SpriteZombie = new AnimatedSprite(spriteSheet);
+            
+            
             SpriteSheet spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spritePerso);
 
