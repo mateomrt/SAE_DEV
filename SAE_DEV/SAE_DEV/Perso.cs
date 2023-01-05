@@ -42,7 +42,7 @@ namespace SAE_DEV
         }
         public void Update(float deltaTime)
         {
-
+            _animationPerso = "idle";
             _previouskeyboardState = _currentkeyboardState;
             _currentkeyboardState = Keyboard.GetState();
 
