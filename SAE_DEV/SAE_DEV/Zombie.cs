@@ -104,6 +104,7 @@ namespace SAE_DEV
             _spriteBatch.Begin();
             _spriteBatch.Draw(_spriteZombie, _positionZombie);
             _spriteBatch.End();
+
         }
 
     }
