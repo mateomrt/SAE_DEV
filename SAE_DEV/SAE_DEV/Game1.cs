@@ -118,7 +118,7 @@ namespace SAE_DEV
             GraphicsDevice.Clear(Color.Black);
 
             _tiledMapRenderer.Draw();
-
+            zombielvl1.Draw(_spriteBatch);
 
             // TODO: Add your drawing code here
             base.Draw(gameTime);
