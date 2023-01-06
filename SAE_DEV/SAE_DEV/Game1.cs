@@ -10,6 +10,11 @@ using MonoGame.Extended.ViewportAdapters;
 using System;
 using MonoGame.Extended;
 
+using MonoGame.Extended.Screens;
+using MonoGame.Extended.Screens.Transitions;
+using System.Xml.Linq;
+using SAE_DEV.Screens;
+
 namespace SAE_DEV
 {
     public class Game1 : Game
@@ -33,7 +38,9 @@ namespace SAE_DEV
         private float _positionCameraY;
         private int _screenWidth;
         private int _screenHeight;
+        public SpriteBatch SpriteBatch { get; private set; }
 
+        private ScreenManager _screenManager;
 
 
 
@@ -62,6 +69,8 @@ namespace SAE_DEV
             _positionPerso = new Vector2(150, 250);
             _vitessePerso = 150;
             _positionZombie = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
+            _screenManager = new ScreenManager();
+            
 
             _screenWidth = 1280;
             _screenHeight = 720;
@@ -74,6 +83,21 @@ namespace SAE_DEV
             base.Initialize();
         }
 
+        public void LoadScreen(GameScreen screen)
+        {
+            _screenManager.LoadScreen(screen, new FadeTransition(GraphicsDevice, Color.Black, .5f));
+
+        }
+
+        public void LoadMenu()
+        {
+            LoadScreen(new Menu(this));
+        }
+        public void LoadMonde()
+        {
+            LoadScreen(new Monde(this));
+        }
+
         protected override void LoadContent()
         {
             
@@ -83,11 +107,14 @@ namespace SAE_DEV
             _Zombielvl1 = new AnimatedSprite(spriteSheet);
             SpriteSheet spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spritePerso);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             _tiledMap = Content.Load<TiledMap>("map2");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("Batiment");
 
+            // TODO: use this.Content to load your game content here
+            LoadMenu();
         }
 
         protected override void Update(GameTime gameTime)
@@ -180,7 +207,9 @@ namespace SAE_DEV
 
             
             
+            _screenManager.Update(gameTime);
 
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             base.Update(gameTime);
         }
@@ -195,10 +224,14 @@ namespace SAE_DEV
             
             _tiledMapRenderer.Draw(transformMatrix);
             
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Draw(_Zombielvl1, _positionZombie);
              _spriteBatch.Draw(_perso, _positionPerso);
             _spriteBatch.End();
+            // TODO: Add your drawing code here
+
+            _screenManager.Draw(gameTime);
 
 
 

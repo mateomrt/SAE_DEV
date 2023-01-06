@@ -11,6 +11,7 @@ using MonoGame.Extended.Tiled.Renderers;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
+using System.Reflection.Metadata;
 
 
 namespace SAE_DEV
@@ -23,14 +24,6 @@ namespace SAE_DEV
         private string _animationZombie;
         private Vector2 _directionZombie;
 
-        public Zombie(Vector2 positionZombie, int vitesseZombie, AnimatedSprite spriteZombie, string animationZombie, Vector2 directionZombie)
-        {
-            this.PositionZombie = positionZombie;
-            this.VitesseZombie = vitesseZombie;
-            this.SpriteZombie = spriteZombie;
-            this.AnimationZombie = animationZombie;
-            this.DirectionZombie = directionZombie;
-        }
 
         public Vector2 PositionZombie
         {
@@ -97,11 +90,27 @@ namespace SAE_DEV
             }
         }
 
-
-        public void Initialize(Game game1)
+        public void Initialize(Game game)
         {
-            this.PositionZombie = new Vector2(200, 200);
-            this.VitesseZombie = 100;
+            _vitesseZombie = 100;
+        }
+
+        public void LoadContent(Game game)
+        {
+            SpriteSheet spritezombie = game.Content.Load<SpriteSheet>("ZombieToast_50.sf", new JsonContentLoader());
+            _spriteZombie = new AnimatedSprite(spritezombie);
+        }
+
+        public void Update(float deltaTime)
+        {
+            _spriteZombie.Play("idle");
+            _spriteZombie.Update(deltaTime);
+        }
+        public void Draw(SpriteBatch _spriteBatch)
+        {
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_spriteZombie, _positionZombie);
+            _spriteBatch.End();
 
         }
 
