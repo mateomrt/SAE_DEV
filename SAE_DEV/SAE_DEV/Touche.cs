@@ -19,7 +19,7 @@ namespace SAE_DEV
             var _direction = Vector2.Zero;
 
             //Deplacement du perso + collisions
-            if (_keyboardState.IsKeyDown(Keys.Right))
+            if (_keyboardState.IsKeyDown(Keys.Right) || _keyboardState.IsKeyDown(Keys.D))
             {
                 ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth + 0.5);
                 ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileWidth);
@@ -29,7 +29,7 @@ namespace SAE_DEV
                     _direction.X += 1;
                 }
             }
-            if (_keyboardState.IsKeyDown(Keys.Up))
+            if (_keyboardState.IsKeyDown(Keys.Up) || _keyboardState.IsKeyDown(Keys.Z))
             {
                 ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                 ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileWidth - 0.5);
@@ -40,7 +40,7 @@ namespace SAE_DEV
                 }
 
             }
-            if (_keyboardState.IsKeyDown(Keys.Down))
+            if (_keyboardState.IsKeyDown(Keys.Down) || _keyboardState.IsKeyDown(Keys.S))
             {
                 ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                 ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileWidth + 0.5);
@@ -51,7 +51,7 @@ namespace SAE_DEV
                 }
 
             }
-            if (_keyboardState.IsKeyDown(Keys.Left))
+            if (_keyboardState.IsKeyDown(Keys.Left) || _keyboardState.IsKeyDown(Keys.Q))
             {
                 ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth - 0.5);
                 ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileWidth);
