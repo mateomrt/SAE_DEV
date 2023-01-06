@@ -77,8 +77,6 @@ namespace SAE_DEV.Screens
         {
             _tiledMap = Content.Load<TiledMap>("map1");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
-            _tiledMap = Content.Load<TiledMap>("map2");
-            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("Batiment");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             
@@ -92,19 +90,7 @@ namespace SAE_DEV.Screens
             base.LoadContent();
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.Black);
-
-            var transformMatrix = _camera.GetViewMatrix();
-
-            _spriteBatch.Begin(transformMatrix: transformMatrix);
-
-            _tiledMapRenderer.Draw(transformMatrix);
-
-            character.Draw(Game.SpriteBatch);
-            zombielvl1.Draw(Game.SpriteBatch);
-        }
+        
 
         public override void Update(GameTime gameTime)
         {
@@ -195,6 +181,20 @@ namespace SAE_DEV.Screens
                 Game.LoadMenu();
             }
             
+        }
+        public override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.Black);
+
+            var transformMatrix = _camera.GetViewMatrix();
+
+            _spriteBatch.Begin(transformMatrix: transformMatrix);
+
+
+            _tiledMapRenderer.Draw(transformMatrix);
+            _spriteBatch.End();
+
+
         }
         private bool IsCollision(ushort x, ushort y)
         {

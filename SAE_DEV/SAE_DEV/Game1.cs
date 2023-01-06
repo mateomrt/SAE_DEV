@@ -80,6 +80,15 @@ namespace SAE_DEV
             LoadScreen(new Monde(this));
         }
 
+        protected override void LoadContent()
+        {
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
+
+
+            // TODO: use this.Content to load your game content here
+            LoadMenu();
+        }
+
         protected override void Update(GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
