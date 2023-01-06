@@ -69,6 +69,7 @@ namespace SAE_DEV
             _screenManager.LoadScreen(screen, new FadeTransition(GraphicsDevice, Color.Black, .5f));
 
         }
+        
 
         public void LoadMenu()
         {
