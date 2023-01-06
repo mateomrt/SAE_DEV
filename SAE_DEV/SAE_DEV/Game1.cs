@@ -24,15 +24,14 @@ namespace SAE_DEV
         private TiledMapRenderer _tiledMapRenderer;
         private Vector2 _positionZombie;
         private AnimatedSprite _Zombielvl1;
-        private Vector2 _positionPerso;
+        public Vector2 _positionPerso;
         private int _vitessePerso;
         private AnimatedSprite _perso;
         private string _animationPerso;
-        private OrthographicCamera _camera;
-        private float _positionCameraX;
-        private float _positionCameraY;
         private int _screenWidth;
         private int _screenHeight;
+        public static OrthographicCamera _camera;
+        public static Vector2 _cameraPosition;
 
 
 
@@ -65,8 +64,8 @@ namespace SAE_DEV
 
             var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, _screenWidth, _screenHeight);
             _camera = new OrthographicCamera(viewportAdapter);
-            _camera.Position = new Vector2(_screenWidth,_screenHeight);
             _camera.ZoomIn(1.5f);
+            _camera.Position = new Vector2(_positionPerso.X, _positionPerso.X);
 
             base.Initialize();
         }
@@ -105,21 +104,21 @@ namespace SAE_DEV
             
             _animationPerso = "idle";
 
-            _positionCameraX = _positionPerso.X;
-            _positionCameraY = _positionPerso.Y;
+            _cameraPosition.X = _positionPerso.X;
+            _cameraPosition.Y = _positionPerso.Y;
 
             // En a gauche
             if (_positionPerso.X < _screenWidth / 5)
-                _positionCameraX = _screenWidth / 5;
+                _cameraPosition.X = _screenWidth / 5;
             // A droite
             if (_positionPerso.X > (MAP1_TAILLE - _screenWidth / 5))
-                _positionCameraX = (MAP1_TAILLE - _screenWidth / 5);
+                _cameraPosition.X = (MAP1_TAILLE - _screenWidth / 5);
             //en haut
             if (_positionPerso.Y < _screenHeight / 5)
-                _positionCameraY = _screenHeight / 5;
+                _cameraPosition.Y = _screenHeight / 5;
             // en bas
             if (_positionPerso.Y > (MAP1_TAILLE - _screenHeight / 5))
-                _positionCameraY = (MAP1_TAILLE - _screenHeight / 5);
+                _cameraPosition.Y = (MAP1_TAILLE - _screenHeight / 5);
 
 
 
@@ -167,7 +166,7 @@ namespace SAE_DEV
                 }
             }
 
-            _camera.LookAt(new Vector2(_positionCameraX, _positionCameraY));
+            _camera.LookAt(new Vector2(_cameraPosition.X, _cameraPosition.Y));
 
 
             _perso.Play(_animationPerso); // on joue l'animation du perso
@@ -216,28 +215,7 @@ namespace SAE_DEV
             return false;
         }
 
-        private Vector2 GetMovementDirection()
-        {
-            var movementDirection = Vector2.Zero;
-            var state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Down))
-            {
-                movementDirection += Vector2.UnitY;
-            }
-            if (state.IsKeyDown(Keys.Up))
-            {
-                movementDirection -= Vector2.UnitY;
-            }
-            if (state.IsKeyDown(Keys.Left))
-            {
-                movementDirection -= Vector2.UnitX;
-            }
-            if (state.IsKeyDown(Keys.Right))
-            {
-                movementDirection += Vector2.UnitX;
-            }
-            return movementDirection;
-        }
+        
 
 
     }
