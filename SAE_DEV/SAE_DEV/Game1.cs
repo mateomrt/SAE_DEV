@@ -21,7 +21,6 @@ namespace SAE_DEV
     {
         public static int MAP1_TAILLE = 800;
         public static int MAP2_TAILLE = 560;
-        private KeyboardState _keyboardState;
         private GraphicsDeviceManager _graphics;
         public static int _screenWidth;
         public static int _screenHeight;
@@ -68,7 +67,6 @@ namespace SAE_DEV
         public void LoadScreen(GameScreen screen)
         {
             _screenManager.LoadScreen(screen, new FadeTransition(GraphicsDevice, Color.Black, .5f));
-
         }
         
 
@@ -85,7 +83,7 @@ namespace SAE_DEV
         {
             _SpriteBatch = new SpriteBatch(GraphicsDevice);
             SpriteSheet spriteZombie = Content.Load<SpriteSheet>("ZombieToast_50.sf", new JsonContentLoader());
-
+            
             SpriteSheet spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
             Perso.LoadContent(spritePerso);
 
@@ -131,6 +129,7 @@ namespace SAE_DEV
             
 
             _screenManager.Draw(gameTime);
+            _SpriteBatch.End();
 
             base.Draw(gameTime);
         }
