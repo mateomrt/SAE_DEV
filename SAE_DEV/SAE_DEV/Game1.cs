@@ -84,7 +84,7 @@ namespace SAE_DEV
             SpriteSheet spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spritePerso);
 
-            _tiledMap = Content.Load<TiledMap>("map1");
+            _tiledMap = Content.Load<TiledMap>("map2");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("Batiment");
 
