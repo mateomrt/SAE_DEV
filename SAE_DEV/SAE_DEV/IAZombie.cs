@@ -16,28 +16,24 @@ namespace SAE_DEV
 {
     internal class IAZombie
     {
-        private Perso cible;
         private Zombie zombie;
         private float speed;
 
-        public IAZombie(float speed, Perso cible, Zombie zombie)
+        public IAZombie(float speed, Zombie zombie)
         {
             this.Speed = speed;
-            this.Cible = cible;
             this.Zombie = zombie;
         }
 
         public float Speed { get => speed; set => speed = value; }
-        internal Perso Cible { get => cible; set => cible = value; }
         internal Zombie Zombie { get => zombie; set => zombie = value; }
 
         public void Update(GameTime gameTime)
         {
      
-            Vector2 direction = cible.Position - zombie.PositionZombie;
+            Vector2 direction = Perso._positionPerso - zombie.PositionZombie;
             direction.Normalize();
             
-
             zombie.PositionZombie += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         
         }

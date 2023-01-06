@@ -19,12 +19,12 @@ namespace SAE_DEV
 {
     public class Game1 : Game
     {
-        public int MAP1_TAILLE = 800;
-        public int MAP2_TAILLE = 560;
+        public static int MAP1_TAILLE = 800;
+        public static int MAP2_TAILLE = 560;
         private KeyboardState _keyboardState;
         private GraphicsDeviceManager _graphics;
-        private int _screenWidth;
-        private int _screenHeight;
+        public static int _screenWidth = 1280;
+        public static int _screenHeight = 720;
         public SpriteBatch SpriteBatch { get; private set; }
 
         private ScreenManager _screenManager;
@@ -54,8 +54,6 @@ namespace SAE_DEV
             _screenManager = new ScreenManager();
             
 
-            _screenWidth = 1280;
-            _screenHeight = 720;
 
             base.Initialize();
         }

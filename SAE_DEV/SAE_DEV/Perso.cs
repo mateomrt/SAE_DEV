@@ -10,40 +10,37 @@ using System.Threading.Tasks;
 using MonoGame.Extended.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics.Metrics;
+using SAE_DEV.Screens;
 
 namespace SAE_DEV
 {
     internal class Perso
     {
 
-        private AnimatedSprite _spritePerso;
+        public static AnimatedSprite _spritePerso;
 
-        private Vector2 position;
-        private float vitesse_mvt;
-        private Vector2 direction;
-
-
+        public static string _animationPerso;
+        public static Vector2 _positionPerso;
+        public static float vitesse_mvt;
 
 
-        public Vector2 Position { get => position; set => position = value; }
-
-        public void Initialize(Game game)
-        {   
+        public static void Initialize()
+        {
+            _positionPerso = new Vector2(150, 250);
             vitesse_mvt = 100;
         }
-        public void LoadContent(Game game)
+        public static void LoadContent(SpriteSheet finnAT)
         {
-            SpriteSheet finnAT = game.Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
             _spritePerso = new AnimatedSprite(finnAT);
         }
-        public void Update(float deltaTime)
+        public static void Update()
         {
-            _spritePerso.Update(deltaTime);
+            _animationPerso = "idle";   
         }
-        public void Draw(SpriteBatch _spriteBatch)
+        public static void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch)
         {
             
-            _spriteBatch.Draw(_spritePerso, Position);
+            _spriteBatch.Draw(_spritePerso, _positionPerso);
             
         }
     }
