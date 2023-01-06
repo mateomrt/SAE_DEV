@@ -27,8 +27,6 @@ namespace SAE_DEV
         public static void Update()
         {
             _animationPerso = "idle";
-            
-
         }
         public static void Draw(SpriteBatch _spriteBatch)
         {

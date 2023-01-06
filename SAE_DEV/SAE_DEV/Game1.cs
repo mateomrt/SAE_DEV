@@ -109,7 +109,7 @@ namespace SAE_DEV
 
             Perso._spritePerso.Play(Perso._animationPerso);
             Perso._spritePerso.Update(deltaTime);
-            Monde.Update(gameTime);
+            //_screenManager.Update(gameTime);
 
             _screenManager.Update(gameTime);
 

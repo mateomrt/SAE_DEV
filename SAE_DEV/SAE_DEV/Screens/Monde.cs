@@ -1,5 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens;
+using SAE_DEV;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using MonoGame.Extended.Tiled.Renderers;
 using MonoGame.Extended.Tiled;
 
@@ -28,7 +35,7 @@ namespace SAE_DEV.Screens
             _tiledMapRenderer2 = new TiledMapRenderer(GraphicsDevice, _tiledMap2);
             
         }
-        public static void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             _tiledMapRenderer1.Update(gameTime);
             
