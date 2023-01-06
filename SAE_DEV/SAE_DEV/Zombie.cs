@@ -92,7 +92,7 @@ namespace SAE_DEV
 
         public void Initialize(Game game)
         {
-            _vitesseZombie = 100;
+            _vitesseZombie = 50;
         }
 
         public void LoadContent(Game game)

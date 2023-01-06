@@ -54,7 +54,7 @@ namespace SAE_DEV.Screens
         public override void Initialize()
         {
             character = new Perso();
-            character.Position = new Vector2(140, 210);
+            character.Position = new Vector2(400, 210);
             character.LoadContent(Game);
             zombielvl1 = new Zombie();
             zombielvl1.PositionZombie = new Vector2(300, 400);
@@ -191,9 +191,11 @@ namespace SAE_DEV.Screens
             var transformMatrix = _camera.GetViewMatrix();
 
             _spriteBatch.Begin(transformMatrix: transformMatrix);
-          
+
 
             _tiledMapRenderer.Draw(transformMatrix);
+            character.Draw(Game.SpriteBatch);
+            zombielvl1.Draw(Game.SpriteBatch);
             _spriteBatch.End();
 
 
