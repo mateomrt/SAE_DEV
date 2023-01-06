@@ -23,8 +23,9 @@ namespace SAE_DEV.Screens
         private new Game1 Game => (Game1)base.Game;
         Perso character;
         private KeyboardState _keyboardState;
-        Zombie zombielvl1;
-        IAZombie iazombie;
+        Zombie[] zombielvl1;
+        IAZombie[] iazombie;
+
 
         public int MAP1_TAILLE = 800;
         public int MAP2_TAILLE = 560;
@@ -56,9 +57,20 @@ namespace SAE_DEV.Screens
             character = new Perso();
             character.Position = new Vector2(140, 210);
             character.LoadContent(Game);
-            zombielvl1 = new Zombie();
-            zombielvl1.PositionZombie = new Vector2(300, 400);
-            iazombie = new IAZombie(75, character, zombielvl1);
+
+            zombielvl1 = new Zombie[10];
+            iazombie = new IAZombie[10];
+            Random random = new Random();
+
+            for (int i = 0; i < 10; i++)
+            {
+                zombielvl1[i] = new Zombie();
+                zombielvl1[i].PositionZombie = new Vector2(random.Next(50, 800), random.Next(50, 800));
+
+                iazombie[i] = new IAZombie(random.Next(40, 100), character, zombielvl1[i]);
+               
+
+            }
             _screenWidth = 1280;
             _screenHeight = 720;
 
@@ -82,12 +94,14 @@ namespace SAE_DEV.Screens
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("Batiment");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("ZombieToast_50.sf", new JsonContentLoader());
-            _Zombielvl1 = new AnimatedSprite(spriteSheet);
             SpriteSheet spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spritePerso);
 
-            zombielvl1.LoadContent(Game);
+            for(int i = 0; i < 10; i++)
+            {
+                zombielvl1[i].LoadContent(Game);
+            }
+            
 
             base.LoadContent();
         }
@@ -99,7 +113,6 @@ namespace SAE_DEV.Screens
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float walkSpeed = deltaTime * _vitessePerso;
 
-            _Zombielvl1.Play("idle");
 
             _animationPerso = "idle";
 
@@ -130,6 +143,7 @@ namespace SAE_DEV.Screens
                 if (!IsCollision(tx, ty))
                 {
                     _positionPerso.X += walkSpeed;
+                    character.Position = _positionPerso;
                 }
             }
             if (_keyboardState.IsKeyDown(Keys.Up))
@@ -140,6 +154,7 @@ namespace SAE_DEV.Screens
                 if (!IsCollision(tx, ty))
                 {
                     _positionPerso.Y -= walkSpeed;
+                    character.Position = _positionPerso;
                 }
 
             }
@@ -151,6 +166,7 @@ namespace SAE_DEV.Screens
                 if (!IsCollision(tx, ty))
                 {
                     _positionPerso.Y += walkSpeed;
+                    character.Position = _positionPerso;
                 }
 
             }
@@ -162,6 +178,7 @@ namespace SAE_DEV.Screens
                 if (!IsCollision(tx, ty))
                 {
                     _positionPerso.X -= walkSpeed;
+                    character.Position = _positionPerso;
                 }
             }
 
@@ -171,12 +188,18 @@ namespace SAE_DEV.Screens
             _perso.Play(_animationPerso); // on joue l'animation du perso
             _perso.Update(deltaTime); // temps écoulé
             _tiledMapRenderer.Update(gameTime);
-            _Zombielvl1.Update(deltaTime);
+
 
             _tiledMapRenderer.Update(gameTime);
             _keyboardState = Keyboard.GetState();
             character.Update(deltaTime);
-            iazombie.Update(gameTime);
+
+            for(int i = 0; i < 10; i++)
+            {
+                iazombie[i].Update(gameTime);
+
+            }
+                
 
             if (Keyboard.GetState().IsKeyDown(Keys.Y))
             {
@@ -191,10 +214,16 @@ namespace SAE_DEV.Screens
             var transformMatrix = _camera.GetViewMatrix();
 
             _spriteBatch.Begin(transformMatrix: transformMatrix);
-          
+            _spriteBatch.Draw(_perso, _positionPerso);
+            for(int i = 0; i < 10; i++)
+            {
+                zombielvl1[i].Draw(_spriteBatch);
+            }
+            
 
             _tiledMapRenderer.Draw(transformMatrix);
             _spriteBatch.End();
+            
 
 
         }

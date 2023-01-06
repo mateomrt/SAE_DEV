@@ -33,8 +33,10 @@ namespace SAE_DEV
 
         public void Update(GameTime gameTime)
         {
+     
             Vector2 direction = cible.Position - zombie.PositionZombie;
             direction.Normalize();
+            
 
             zombie.PositionZombie += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         

@@ -92,7 +92,8 @@ namespace SAE_DEV
 
         public void Initialize(Game game)
         {
-            _vitesseZombie = 100;
+            Random random = new Random();
+            _vitesseZombie = random.Next(80, 150);
         }
 
         public void LoadContent(Game game)
@@ -108,9 +109,9 @@ namespace SAE_DEV
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
-            _spriteBatch.Begin();
+            
             _spriteBatch.Draw(_spriteZombie, _positionZombie);
-            _spriteBatch.End();
+            
 
         }
 
