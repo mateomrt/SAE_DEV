@@ -25,7 +25,6 @@ namespace SAE_DEV
         private GraphicsDeviceManager _graphics;
         private int _screenWidth;
         private int _screenHeight;
-        private TiledMapTileLayer mapLayer;
         public SpriteBatch SpriteBatch { get; private set; }
 
         private ScreenManager _screenManager;

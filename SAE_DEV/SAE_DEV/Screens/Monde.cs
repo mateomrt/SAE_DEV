@@ -59,7 +59,9 @@ namespace SAE_DEV.Screens
             zombielvl1 = new Zombie();
             zombielvl1.PositionZombie = new Vector2(300, 400);
             iazombie = new IAZombie(75, character, zombielvl1);
-            
+            _screenWidth = 1280;
+            _screenHeight = 720;
+
             var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, _screenWidth, _screenHeight);
             _camera = new OrthographicCamera(viewportAdapter);
             _camera.Position = new Vector2(_screenWidth, _screenHeight);
@@ -189,7 +191,7 @@ namespace SAE_DEV.Screens
             var transformMatrix = _camera.GetViewMatrix();
 
             _spriteBatch.Begin(transformMatrix: transformMatrix);
-
+          
 
             _tiledMapRenderer.Draw(transformMatrix);
             _spriteBatch.End();
