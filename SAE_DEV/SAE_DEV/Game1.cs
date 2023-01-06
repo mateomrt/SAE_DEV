@@ -46,9 +46,6 @@ namespace SAE_DEV
             _graphics.PreferredBackBufferHeight = 720;   // set this value to the desired height of your window
             _graphics.ApplyChanges();
 
-
-
-
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             Window.Title = "Sae Dev";
