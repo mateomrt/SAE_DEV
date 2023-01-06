@@ -93,7 +93,7 @@ namespace SAE_DEV
         public void Initialize(Game game)
         {
             Random random = new Random();
-            _vitesseZombie = random.Next(80, 150);
+            _vitesseZombie = random.Next(30, 31);
         }
 
         public void LoadContent(Game game)

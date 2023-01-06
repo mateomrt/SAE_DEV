@@ -54,7 +54,6 @@ namespace SAE_DEV
             _screenManager = new ScreenManager();
             
 
-
             base.Initialize();
         }
 
@@ -79,7 +78,6 @@ namespace SAE_DEV
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
 
-            // TODO: use this.Content to load your game content here
             LoadMenu();
         }
 
@@ -105,9 +103,7 @@ namespace SAE_DEV
         protected override void Draw(GameTime gameTime)
         {
             
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
+            GraphicsDevice.Clear(Color.Black);
 
             _screenManager.Draw(gameTime);
 

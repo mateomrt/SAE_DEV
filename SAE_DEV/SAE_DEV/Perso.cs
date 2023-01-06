@@ -26,12 +26,14 @@ namespace SAE_DEV
 
         public static void Initialize()
         {
+            //Initialisation de la position et de la vitesse du personnage
             _positionPerso = new Vector2(150, 250);
-            vitesse_mvt = 100;
+            vitesse_mvt = 70 ;
         }
-        public static void LoadContent(SpriteSheet finnAT)
+        public static void LoadContent(SpriteSheet spriteSheet)
         {
-            _spritePerso = new AnimatedSprite(finnAT);
+            //on affecte la texture de notre personnage
+            _spritePerso = new AnimatedSprite(spriteSheet);
         }
         public static void Update()
         {
@@ -40,6 +42,7 @@ namespace SAE_DEV
         public static void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch)
         {
             
+            //On dessine notre personnage avec sa texture et sa position
             _spriteBatch.Draw(_spritePerso, _positionPerso);
             
         }

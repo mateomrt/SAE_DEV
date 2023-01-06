@@ -10,7 +10,7 @@ namespace SAE_DEV
 {
     internal class Collision
     {
-        
+        //On vérifie ici si il y a des collisions avec les tuiles alentours
         public static bool IsCollision(ushort x, ushort y)
         {
             TiledMapTileLayer mapLayer = Monde._tiledMap.GetLayer<TiledMapTileLayer>("Batiment");

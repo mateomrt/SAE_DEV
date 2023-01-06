@@ -16,12 +16,14 @@ namespace SAE_DEV
 
         public static void Initialise(BoxingViewportAdapter viewportAdapter)
         {
+            //Initialisation de la caméra + sa position + son zoom
             _camera = new OrthographicCamera(viewportAdapter);
             _cameraPosition = new Vector2(Perso._positionPerso.X, Perso._positionPerso.Y);
             _camera.ZoomIn(1.5f);
         }
         public static void Update()
         {
+            //On déplace la caméra avec le perso
             _cameraPosition = new Vector2(Perso._positionPerso.X, Perso._positionPerso.Y);
 
             // On fixe la caméra quand on arrive a gauche

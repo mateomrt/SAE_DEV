@@ -23,7 +23,7 @@ namespace SAE_DEV
             {
                 ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth + 0.5);
                 ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileWidth);
-                Perso._animationPerso = "running";
+                Perso._animationPerso = "walkEast";
                 if (!Collision.IsCollision(tx, ty))
                 {
                     _direction.X += 1;
@@ -33,7 +33,7 @@ namespace SAE_DEV
             {
                 ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                 ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileWidth - 0.5);
-                Perso._animationPerso = "running";
+                Perso._animationPerso = "walkNorth";
                 if (!Collision.IsCollision(tx, ty))
                 {
                     _direction.Y -= 1;
@@ -44,7 +44,7 @@ namespace SAE_DEV
             {
                 ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth);
                 ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileWidth + 0.5);
-                Perso._animationPerso = "running";
+                Perso._animationPerso = "walkSouth";
                 if (!Collision.IsCollision(tx, ty))
                 {
                     _direction.Y += 1;
@@ -55,7 +55,7 @@ namespace SAE_DEV
             {
                 ushort tx = (ushort)(_positionPerso.X / _tiledMap.TileWidth - 0.5);
                 ushort ty = (ushort)(_positionPerso.Y / _tiledMap.TileWidth);
-                Perso._animationPerso = "running";
+                Perso._animationPerso = "walkWest";
                 if (!Collision.IsCollision(tx, ty))
                 {
                     _direction.X -= 1;

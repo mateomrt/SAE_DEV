@@ -58,7 +58,7 @@ namespace SAE_DEV.Screens
                 zombielvl1[i] = new Zombie();
                 zombielvl1[i].PositionZombie = new Vector2(random.Next(50, 800), random.Next(50, 800));
 
-                iazombie[i] = new IAZombie(random.Next(40, 100), zombielvl1[i]);
+                iazombie[i] = new IAZombie(random.Next(40, 60), zombielvl1[i]);
                
 
             }
@@ -81,7 +81,8 @@ namespace SAE_DEV.Screens
             
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             
-            _spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
+            //Chargement texture Perso
+            _spritePerso = Content.Load<SpriteSheet>("elf_spritesheet.sf", new JsonContentLoader());
             Perso.LoadContent(_spritePerso);
 
             for(int i = 0; i < 10; i++)
@@ -101,12 +102,15 @@ namespace SAE_DEV.Screens
             float walkSpeed = deltaTime * Perso.vitesse_mvt;
 
 
+
             Perso.Update();
             
+            //On vérifie si une touche est pressée DANS cette classe
             Touche.Presse(Perso._positionPerso, _tiledMap, Perso._animationPerso, walkSpeed, deltaTime);
 
-
+            //On joue ici l'animation du perso
             Perso._spritePerso.Play(Perso._animationPerso);
+            //Si on ne se déplace plus on fait l'animation "idle"
             Perso._spritePerso.Update(deltaTime);
 
 
@@ -114,6 +118,7 @@ namespace SAE_DEV.Screens
             Camera.Update();
 
 
+            //Ici on charge la map
             _tiledMapRenderer.Update(gameTime);
             
 
@@ -124,6 +129,7 @@ namespace SAE_DEV.Screens
             }
                 
 
+            //Touche Y pour retourner au menu du jeu
             if (Keyboard.GetState().IsKeyDown(Keys.Y))
             {
                 Game.LoadMenu();
@@ -134,11 +140,11 @@ namespace SAE_DEV.Screens
         {
             GraphicsDevice.Clear(Color.Black);
 
+            //On met en place la caméra
             var transformMatrix = Camera._camera.GetViewMatrix();
-
             _spriteBatch.Begin(transformMatrix: transformMatrix);
 
-          //  Console.WriteLine("Draw : " + Perso._positionPerso);
+            //On dessine notre Perso
             Perso.Draw(_spriteBatch);
             
             for(int i = 0; i < 10; i++)
@@ -146,6 +152,7 @@ namespace SAE_DEV.Screens
                 zombielvl1[i].Draw(_spriteBatch);
             }
             
+            //On dessine la map avec la "vision" de la caméra
             _tiledMapRenderer.Draw(transformMatrix);
 
             _spriteBatch.End();
