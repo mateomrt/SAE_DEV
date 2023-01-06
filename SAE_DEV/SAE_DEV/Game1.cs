@@ -19,13 +19,13 @@ namespace SAE_DEV
 {
     public class Game1 : Game
     {
-        public int MAP1_TAILLE = 800;
-        public int MAP2_TAILLE = 560;
+        public static int MAP1_TAILLE = 800;
+        public static int MAP2_TAILLE = 560;
         private KeyboardState _keyboardState;
         private GraphicsDeviceManager _graphics;
-        private int _screenWidth;
-        private int _screenHeight;
-        public SpriteBatch SpriteBatch { get; private set; }
+        public static int _screenWidth;
+        public static int _screenHeight;
+        public SpriteBatch _SpriteBatch { get; set; }
 
         private ScreenManager _screenManager;
 
@@ -46,20 +46,22 @@ namespace SAE_DEV
             _graphics.PreferredBackBufferHeight = 720;   // set this value to the desired height of your window
             _graphics.ApplyChanges();
 
-
-
+            _screenWidth = _graphics.PreferredBackBufferWidth;
+            _screenHeight = _graphics.PreferredBackBufferHeight;
 
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             Window.Title = "Sae Dev";
 
-            
+
             _screenManager = new ScreenManager();
+
+            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, _screenWidth, _screenHeight);
+            Camera.Initialise(viewportadapter);
+
+            Perso.Initialize();
             
-
-            _screenWidth = 1280;
-            _screenHeight = 720;
-
+            
             base.Initialize();
         }
 
@@ -81,28 +83,35 @@ namespace SAE_DEV
 
         protected override void LoadContent()
         {
-            SpriteBatch = new SpriteBatch(GraphicsDevice);
+            _SpriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteSheet spriteZombie = Content.Load<SpriteSheet>("ZombieToast_50.sf", new JsonContentLoader());
 
+            SpriteSheet spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
+            Perso.LoadContent(spritePerso);
 
-            // TODO: use this.Content to load your game content here
+            Monde.LoadContent(Content, GraphicsDevice);
+
             LoadMenu();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
-            _keyboardState = Keyboard.GetState();
-
-
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
 
-            
-            
+            float walkSpeed = deltaTime * Perso._vitesseMvt;
+            Perso.Update();
+            Touche.Presse(Perso._positionPerso, Monde._tiledMap1, Perso._animationPerso, walkSpeed, _graphics);
+
+            Camera.Update();
+
+            Perso._spritePerso.Play(Perso._animationPerso);
+            Perso._spritePerso.Update(deltaTime);
+            Monde.Update(gameTime);
+
             _screenManager.Update(gameTime);
-
-            
 
             base.Update(gameTime);
         }
@@ -110,9 +119,16 @@ namespace SAE_DEV
         protected override void Draw(GameTime gameTime)
         {
             
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
+            var transformMatrix = Camera._camera.GetViewMatrix();
+
+            _SpriteBatch.Begin(transformMatrix: transformMatrix);
+
+            Monde.Draw(transformMatrix);
+            Perso.Draw(_SpriteBatch);
+
+            
 
             _screenManager.Draw(gameTime);
 
