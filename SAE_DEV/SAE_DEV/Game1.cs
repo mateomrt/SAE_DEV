@@ -52,9 +52,6 @@ namespace SAE_DEV
             _graphics.PreferredBackBufferHeight = 720;   // set this value to the desired height of your window
             _graphics.ApplyChanges();
 
-
-
-
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             Window.Title = "Sae Dev";
@@ -84,7 +81,7 @@ namespace SAE_DEV
             SpriteSheet spritePerso = Content.Load<SpriteSheet>("FinnSprite.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spritePerso);
 
-            _tiledMap = Content.Load<TiledMap>("map2");
+            _tiledMap = Content.Load<TiledMap>("map1");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("Batiment");
 
