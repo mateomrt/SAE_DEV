@@ -28,6 +28,7 @@ namespace SAE_DEV.Screens
 
         public static int MAP1_TAILLE = 800;
         public static int MAP2_TAILLE = 560;
+        public const int nbZombie = 20;
         public static TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
 
@@ -35,7 +36,7 @@ namespace SAE_DEV.Screens
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        
+
         private int _screenWidth;
         private int _screenHeight;
 
@@ -47,19 +48,20 @@ namespace SAE_DEV.Screens
 
         public override void Initialize()
         {
-            
 
-            zombielvl1 = new Zombie[10];
-            iazombie = new IAZombie[10];
+
+            zombielvl1 = new Zombie[nbZombie];
+            iazombie = new IAZombie[nbZombie];
             Random random = new Random();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i] = new Zombie();
                 zombielvl1[i].PositionZombie = new Vector2(random.Next(50, 800), random.Next(50, 800));
 
+
                 iazombie[i] = new IAZombie(random.Next(40, 60), zombielvl1[i]);
-               
+
 
             }
             _screenWidth = 1280;
@@ -78,23 +80,23 @@ namespace SAE_DEV.Screens
         {
             _tiledMap = Content.Load<TiledMap>("map1");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
-            
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
             //Chargement texture Perso
             _spritePerso = Content.Load<SpriteSheet>("elf_spritesheet.sf", new JsonContentLoader());
             Perso.LoadContent(_spritePerso);
 
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i].LoadContent(Game);
             }
-            
+
 
             base.LoadContent();
         }
 
-        
+
 
         public override void Update(GameTime gameTime)
         {
@@ -104,7 +106,7 @@ namespace SAE_DEV.Screens
 
 
             Perso.Update();
-            
+
             //On vérifie si une touche est pressée DANS cette classe
             Touche.Presse(Perso._positionPerso, _tiledMap, Perso._animationPerso, walkSpeed, deltaTime);
 
@@ -120,21 +122,21 @@ namespace SAE_DEV.Screens
 
             //Ici on charge la map
             _tiledMapRenderer.Update(gameTime);
-            
 
-            for(int i = 0; i < 10; i++)
+
+            for (int i = 0; i < zombielvl1.Length; i++)
             {
                 iazombie[i].Update(gameTime);
 
             }
-                
+
 
             //Touche Y pour retourner au menu du jeu
             if (Keyboard.GetState().IsKeyDown(Keys.Y))
             {
                 Game.LoadMenu();
             }
-            
+
         }
         public override void Draw(GameTime gameTime)
         {
@@ -146,18 +148,18 @@ namespace SAE_DEV.Screens
 
             //On dessine notre Perso
             Perso.Draw(_spriteBatch);
-            
-            for(int i = 0; i < 10; i++)
+
+            for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i].Draw(_spriteBatch);
             }
-            
+
             //On dessine la map avec la "vision" de la caméra
             _tiledMapRenderer.Draw(transformMatrix);
 
             _spriteBatch.End();
-            
+
         }
-        
+
     }
 }
