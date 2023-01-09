@@ -71,12 +71,20 @@ namespace SAE_DEV.Screens
             var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, _screenWidth, _screenHeight);
             Camera.Initialise(viewportAdapter);
 
-
+            
             base.Initialize();
         }
         public override void LoadContent()
         {
-            _tiledMap = Content.Load<TiledMap>("map1");
+            if (Game1._choixMap == 1)
+            {
+                _tiledMap = Content.Load<TiledMap>("map1");
+            }
+            else if (Game1._choixMap == 2)
+            {
+                _tiledMap = Content.Load<TiledMap>("map2");
+            }
+            
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             
             _spriteBatch = new SpriteBatch(GraphicsDevice);

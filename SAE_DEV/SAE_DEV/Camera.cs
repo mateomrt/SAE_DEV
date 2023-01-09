@@ -26,18 +26,39 @@ namespace SAE_DEV
             //On déplace la caméra avec le perso
             _cameraPosition = new Vector2(Perso._positionPerso.X, Perso._positionPerso.Y);
 
-            // On fixe la caméra quand on arrive a gauche
-            if (Perso._positionPerso.X < Game1._screenWidth / 5)
-                _cameraPosition.X = Game1._screenWidth / 5;
-            // On fixe la caméra quand on arrive a droite
-            if (Perso._positionPerso.X > (Game1.MAP1_TAILLE - Game1._screenWidth / 5))
-                _cameraPosition.X = (Game1.MAP1_TAILLE - Game1._screenWidth / 5);
-            // On fixe la caméra quand on arrive en haut
-            if (Perso._positionPerso.Y < Game1._screenHeight / 5)
-                _cameraPosition.Y = Game1._screenHeight / 5;
-            // On fixe la caméra quand on arrive en bas
-            if (Perso._positionPerso.Y > (Game1.MAP1_TAILLE - Game1._screenHeight / 5))
-                _cameraPosition.Y = (Game1.MAP1_TAILLE - Game1._screenHeight / 5);
+            
+            // ON CHANGE LE MOYEN DE BLOQUER LA CAMERA CAR LES 2 MAP NE FONT PAS LA MEME TAILLE
+            if (Game1._choixMap == 1)
+            {
+                // On fixe la caméra quand on arrive a gauche
+                if (Perso._positionPerso.X < Game1._screenWidth / 5)
+                    _cameraPosition.X = Game1._screenWidth / 5;
+                // On fixe la caméra quand on arrive a droite
+                if (Perso._positionPerso.X > (Game1.MAP1_TAILLE - Game1._screenWidth / 5))
+                    _cameraPosition.X = (Game1.MAP1_TAILLE - Game1._screenWidth / 5);
+                // On fixe la caméra quand on arrive en haut
+                if (Perso._positionPerso.Y < Game1._screenHeight / 5)
+                    _cameraPosition.Y = Game1._screenHeight / 5;
+                // On fixe la caméra quand on arrive en bas
+                if (Perso._positionPerso.Y > (Game1.MAP1_TAILLE - Game1._screenHeight / 5))
+                    _cameraPosition.Y = (Game1.MAP1_TAILLE - Game1._screenHeight / 5);
+            }
+            if (Game1._choixMap == 2)
+            {
+                // On fixe la caméra quand on arrive a gauche
+                if (Perso._positionPerso.X < Game1._screenWidth / 5)
+                    _cameraPosition.X = Game1._screenWidth / 5;
+                // On fixe la caméra quand on arrive a droite
+                if (Perso._positionPerso.X > (Game1.MAP2_TAILLE - Game1._screenWidth / 5))
+                    _cameraPosition.X = (Game1.MAP2_TAILLE - Game1._screenWidth / 5);
+                // On fixe la caméra quand on arrive en haut
+                if (Perso._positionPerso.Y < Game1._screenHeight / 5)
+                    _cameraPosition.Y = Game1._screenHeight / 5;
+                // On fixe la caméra quand on arrive en bas
+                if (Perso._positionPerso.Y > (Game1.MAP2_TAILLE - Game1._screenHeight / 5))
+                    _cameraPosition.Y = (Game1.MAP2_TAILLE - Game1._screenHeight / 5);
+            }
+
 
             _camera.LookAt(_cameraPosition);
         }
