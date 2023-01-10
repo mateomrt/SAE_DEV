@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Sprites;
 using SAE_DEV;
+using SAE_DEV.Screens;
 
 namespace SAE_DEV
 {
@@ -39,6 +40,15 @@ namespace SAE_DEV
             float _timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Position += _direction * LinearVelocity;
+
+            ushort tx = (ushort)(Position.X / Monde._tiledMap.TileWidth);
+            ushort ty = (ushort)(Position.Y / Monde._tiledMap.TileWidth);
+
+
+            if (Collision.IsCollision(tx, ty))
+            {
+                Position = new Vector2(0,0);
+            }
         }
     }
 }

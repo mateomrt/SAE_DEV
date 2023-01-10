@@ -29,7 +29,7 @@ namespace SAE_DEV.Screens
 
         public static int MAP1_TAILLE = 800;
         public static int MAP2_TAILLE = 560;
-        public const int nbZombie = 0;
+        public const int nbZombie = 20;
         public static TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
 
