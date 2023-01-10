@@ -30,12 +30,19 @@ namespace SAE_DEV
 
         public void Update(GameTime gameTime)
         {
-     
-            Vector2 direction = Perso._positionPerso - zombie.PositionZombie;
-            direction.Normalize();
-            
-            zombie.PositionZombie += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        
+            if(Math.Sqrt(Math.Pow(Perso._positionPerso.X-zombie.PositionZombie.X, 2) + Math.Pow(Perso._positionPerso.Y-zombie.PositionZombie.Y, 2)) > 150)
+            {
+                speed = 0;
+            }
+            else
+            {
+                Random rand = new Random();
+                speed = rand.Next(40,65);
+                Vector2 direction = Perso._positionPerso - zombie.PositionZombie;
+                direction.Normalize();
+                zombie.PositionZombie += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
         }
 
 

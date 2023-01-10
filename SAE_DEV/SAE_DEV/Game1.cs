@@ -26,6 +26,7 @@ namespace SAE_DEV
         private GraphicsDeviceManager _graphics;
         public static int _screenWidth = 1280;
         public static int _screenHeight = 720;
+        public static int _choixMap;
         public SpriteBatch SpriteBatch { get; private set; }
 
         private ScreenManager _screenManager;
@@ -35,8 +36,9 @@ namespace SAE_DEV
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            
-            
+            Window.AllowUserResizing = false;
+
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -47,11 +49,13 @@ namespace SAE_DEV
             _graphics.PreferredBackBufferHeight = 720;   // set this value to the desired height of your window
             _graphics.ApplyChanges();
 
+
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             Window.Title = "Sae Dev";
 
             
+
             _screenManager = new ScreenManager();
             
 
@@ -76,9 +80,6 @@ namespace SAE_DEV
 
         protected override void LoadContent()
         {
-            SpriteBatch = new SpriteBatch(GraphicsDevice);
-
-
             LoadMenu();
         }
 
