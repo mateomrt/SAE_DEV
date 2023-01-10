@@ -225,10 +225,31 @@ namespace SAE_DEV.Screens
                 bullet.Draw(_spriteBatch);
             }
 
-            //On dessine la map avec la "vision" de la caméra
+            
+
+            
+            
+            //On dessine la map avec la "vue" de la caméra
             _tiledMapRenderer.Draw(transformMatrix);
 
             
+
+
+            _spriteBatch.End();
+
+            _spriteBatch.Begin();
+
+            // AFFICHAGE DE LA VIE
+            Vector2 _postionCoeur = new Vector2(10,40);
+
+            for (int i = 0; i < Perso.vie; i++)
+            {
+                _spriteBatch.Draw(_textureCoeurPlein, new Vector2(_postionCoeur.X + 40 + (80 * i), _postionCoeur.Y), Color.White);
+            }
+            for (int i = 0; i < 5 - Perso.vie; i++)
+            {
+                _spriteBatch.Draw(_textureCoeurVide, new Vector2(_postionCoeur.X + 40 + (80 * Perso.vie) + 80 * i, _postionCoeur.Y), Color.White);
+            }
 
             _spriteBatch.End();
 
