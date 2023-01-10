@@ -137,6 +137,8 @@ namespace SAE_DEV.Screens
             //On vérifie si une touche est pressée DANS cette classe
             Touche.Presse(Perso._positionPerso, _tiledMap, Perso._animationPerso, walkSpeed, deltaTime);
 
+
+            // Creation des balles et mise à jour
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 CreateBullet();

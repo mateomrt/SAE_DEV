@@ -16,11 +16,8 @@ namespace SAE_DEV
         private Vector2 _position;
         private Vector2 _direction;
 
-        private float LifeSpan = 2f;
-        private bool IsRemoved;
 
         private Texture2D sprite;
-        private object spriteBatch;
 
         public Bullet(Vector2 position, Vector2 direction, Texture2D bulletSprite)
         {
@@ -38,9 +35,6 @@ namespace SAE_DEV
         public void Update(GameTime gameTime)
         {
             float _timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (_timer >= LifeSpan)
-                IsRemoved = true;
 
             _position += _direction * LinearVelocity;
         }
