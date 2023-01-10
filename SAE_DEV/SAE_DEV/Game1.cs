@@ -77,6 +77,10 @@ namespace SAE_DEV
         {
             LoadScreen(new Monde(this));
         }
+        public void LoadGameOver()
+        {
+            LoadScreen(new GameOver(this));
+        }
 
         protected override void LoadContent()
         {

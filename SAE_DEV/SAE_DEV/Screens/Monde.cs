@@ -25,7 +25,8 @@ namespace SAE_DEV.Screens
         private new Game1 Game => (Game1)base.Game;
         Zombie[] zombielvl1;
         IAZombie[] iazombie;
-
+        public Texture2D gameover;
+        public Vector2 positionGameOver;
 
         public static int MAP1_TAILLE = 800;
         public static int MAP2_TAILLE = 560;
@@ -37,8 +38,10 @@ namespace SAE_DEV.Screens
 
         List<Bullet> bullets = new List<Bullet>();
         public Texture2D _spriteBullet;
-        MouseState currentState;
-        private MouseState previousState;
+        
+        
+        public Texture2D _textureCoeurVide;
+        public Texture2D _textureCoeurPlein;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -55,39 +58,45 @@ namespace SAE_DEV.Screens
         public override void Initialize()
         {
 
+            Random random = new Random();
 
             zombielvl1 = new Zombie[nbZombie];
             iazombie = new IAZombie[nbZombie];
-            Random random = new Random();
+            
+            
 
             for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i] = new Zombie();
+
                 if (Game1._choixMap == 1)
                 {
-                    zombielvl1[i].PositionZombie = new Vector2(random.Next(518, 1078), random.Next(354, 598));
-                    while(zombielvl1[i].PositionZombie.X > 1078 && zombielvl1[i].PositionZombie.X < 518 && zombielvl1[i].PositionZombie.Y > 598 && zombielvl1[i].PositionZombie.Y < 354)
+                    do
                     {
                         zombielvl1[i].PositionZombie = new Vector2(random.Next(518, 1078), random.Next(354, 598));
-                    }
+                    } while (zombielvl1[i].PositionZombie.X > 1078 && zombielvl1[i].PositionZombie.X < 518 && zombielvl1[i].PositionZombie.Y > 598 && zombielvl1[i].PositionZombie.Y < 354);
+                    
                 }
                 if (Game1._choixMap == 2)
                 {
-                    zombielvl1[i].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
-                    
+                    do
+                    {
+                        zombielvl1[i].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
+                    } while (zombielvl1[i].PositionZombie.X > 1036 && zombielvl1[i].PositionZombie.X < 244 && zombielvl1[i].PositionZombie.Y > 556 && zombielvl1[i].PositionZombie.Y < 138);
                 }
+                
+
                 
 
 
                 iazombie[i] = new IAZombie(random.Next(40, 60), zombielvl1[i]);
-
 
             }
             _screenWidth = 1280;
             _screenHeight = 720;
 
             Perso.Initialize();
-
+            positionGameOver = new Vector2(_screenWidth, _screenHeight);
             // INITIALISATION DE LA CAMÉRA
             var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, _screenWidth, _screenHeight);
             Camera.Initialise(viewportAdapter);
@@ -106,7 +115,10 @@ namespace SAE_DEV.Screens
             {
                 _tiledMap = Content.Load<TiledMap>("map2");
             }
-            
+
+            _textureCoeurPlein = Content.Load<Texture2D>("coeurPlein");
+            _textureCoeurVide = Content.Load<Texture2D>("coeurVide");
+
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -121,7 +133,7 @@ namespace SAE_DEV.Screens
                 zombielvl1[i].LoadContent(Game);
             }
 
-
+           
             base.LoadContent();
         }
 
@@ -132,7 +144,7 @@ namespace SAE_DEV.Screens
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float walkSpeed = deltaTime * Perso.vitesse_mvt;
 
-            //Console.WriteLine(" x : " + Mouse.GetState().X +" y : " + Mouse.GetState().Y);
+            
 
             Perso.Update();
 
@@ -182,8 +194,16 @@ namespace SAE_DEV.Screens
             {
                 if (Math.Sqrt(Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10)
                 {
-                    Game.LoadMenu();
+
+                    Perso.vie -= 1;
+                    Perso._positionPerso = new Vector2(150,250);
+                    
                 }
+            }
+
+            if(Perso.vie == 0)
+            {
+                Game.LoadGameOver();
             }
         }
         public override void Draw(GameTime gameTime)
@@ -207,11 +227,35 @@ namespace SAE_DEV.Screens
                 bullet.Draw(_spriteBatch);
             }
 
-            //On dessine la map avec la "vision" de la caméra
+            
+
+            
+            
+            //On dessine la map avec la "vue" de la caméra
             _tiledMapRenderer.Draw(transformMatrix);
+
+            
+
 
             _spriteBatch.End();
 
+            _spriteBatch.Begin();
+
+            // AFFICHAGE DE LA VIE
+            Vector2 _postionCoeur = new Vector2(10,40);
+
+            for (int i = 0; i < Perso.vie; i++)
+            {
+                _spriteBatch.Draw(_textureCoeurPlein, new Vector2(_postionCoeur.X + 40 + (80 * i), _postionCoeur.Y), Color.White);
+            }
+            for (int i = 0; i < 5 - Perso.vie; i++)
+            {
+                _spriteBatch.Draw(_textureCoeurVide, new Vector2(_postionCoeur.X + 40 + (80 * Perso.vie) + 80 * i, _postionCoeur.Y), Color.White);
+            }
+
+            _spriteBatch.End();
+
+            Console.WriteLine(Perso.vie);
         }
 
         private void CreateBullet()
