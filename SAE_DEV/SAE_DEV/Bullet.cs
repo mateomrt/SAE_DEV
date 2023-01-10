@@ -21,22 +21,24 @@ namespace SAE_DEV
 
         public Bullet(Vector2 position, Vector2 direction, Texture2D bulletSprite)
         {
-            this._position = position;
+            this.Position = position;
             this._direction = direction;
             this.sprite = bulletSprite;
         }
 
+        public Vector2 Position { get => _position; set => _position = value; }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             // Just draw the texture we have at the rectangle x and y.
-            spriteBatch.Draw(sprite, _position, Color.White);
+            spriteBatch.Draw(sprite, Position, Color.White);
         }
 
         public void Update(GameTime gameTime)
         {
             float _timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            _position += _direction * LinearVelocity;
+            Position += _direction * LinearVelocity;
         }
     }
 }

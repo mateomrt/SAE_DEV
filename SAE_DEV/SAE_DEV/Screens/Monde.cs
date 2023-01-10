@@ -189,7 +189,9 @@ namespace SAE_DEV.Screens
 
             for(int i = 0; i < zombielvl1.Length; i++)
             {
-                if (Math.Sqrt(Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10)
+                if (Math.Sqrt(
+                    Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + 
+                    Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10)
                 {
 
                     Perso.vie -= 1;
@@ -197,6 +199,9 @@ namespace SAE_DEV.Screens
                     
                 }
             }
+            
+
+
 
             if(Perso.vie == 0)
             {
