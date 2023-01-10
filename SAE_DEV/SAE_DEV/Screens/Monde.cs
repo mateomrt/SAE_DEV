@@ -25,7 +25,8 @@ namespace SAE_DEV.Screens
         public static Perso character;
         Zombie[] zombielvl1;
         IAZombie[] iazombie;
-
+        public Texture2D gameover;
+        public Vector2 positionGameOver;
 
         public static int MAP1_TAILLE = 800;
         public static int MAP2_TAILLE = 560;
@@ -95,7 +96,7 @@ namespace SAE_DEV.Screens
             _screenHeight = 720;
 
             Perso.Initialize();
-
+            positionGameOver = new Vector2(_screenWidth, _screenHeight);
             // INITIALISATION DE LA CAMÉRA
             var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, _screenWidth, _screenHeight);
             Camera.Initialise(viewportAdapter);
@@ -132,7 +133,7 @@ namespace SAE_DEV.Screens
                 zombielvl1[i].LoadContent(Game);
             }
 
-
+           
             base.LoadContent();
         }
 
@@ -193,8 +194,16 @@ namespace SAE_DEV.Screens
             {
                 if (Math.Sqrt(Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10)
                 {
-                    Game.LoadMenu();
+
+                    Perso.vie -= 1;
+                    Perso._positionPerso = new Vector2(150,250);
+                    
                 }
+            }
+
+            if(Perso.vie == 0)
+            {
+                Game.LoadGameOver();
             }
 
         }
@@ -222,8 +231,11 @@ namespace SAE_DEV.Screens
             //On dessine la map avec la "vision" de la caméra
             _tiledMapRenderer.Draw(transformMatrix);
 
+            
+
             _spriteBatch.End();
 
+            Console.WriteLine(Perso.vie);
         }
 
         private void CreateBullet()
