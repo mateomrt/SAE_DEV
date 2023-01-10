@@ -38,6 +38,10 @@ namespace SAE_DEV.Screens
 
         List<Bullet> bullets = new List<Bullet>();
         public Texture2D _spriteBullet;
+        
+        
+        public Texture2D _textureCoeurVide;
+        public Texture2D _textureCoeurPlein;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -54,32 +58,38 @@ namespace SAE_DEV.Screens
         public override void Initialize()
         {
 
+            Random random = new Random();
 
             zombielvl1 = new Zombie[nbZombie];
             iazombie = new IAZombie[nbZombie];
-            Random random = new Random();
+            
+            
 
             for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i] = new Zombie();
+
                 if (Game1._choixMap == 1)
                 {
-                    zombielvl1[i].PositionZombie = new Vector2(random.Next(518, 1078), random.Next(354, 598));
-                    while(zombielvl1[i].PositionZombie.X > 1078 && zombielvl1[i].PositionZombie.X < 518 && zombielvl1[i].PositionZombie.Y > 598 && zombielvl1[i].PositionZombie.Y < 354)
+                    do
                     {
                         zombielvl1[i].PositionZombie = new Vector2(random.Next(518, 1078), random.Next(354, 598));
-                    }
+                    } while (zombielvl1[i].PositionZombie.X > 1078 && zombielvl1[i].PositionZombie.X < 518 && zombielvl1[i].PositionZombie.Y > 598 && zombielvl1[i].PositionZombie.Y < 354);
+                    
                 }
                 if (Game1._choixMap == 2)
                 {
-                    zombielvl1[i].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
-                    
+                    do
+                    {
+                        zombielvl1[i].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
+                    } while (zombielvl1[i].PositionZombie.X > 1036 && zombielvl1[i].PositionZombie.X < 244 && zombielvl1[i].PositionZombie.Y > 556 && zombielvl1[i].PositionZombie.Y < 138);
                 }
+                
+
                 
 
 
                 iazombie[i] = new IAZombie(random.Next(40, 60), zombielvl1[i]);
-
 
             }
             _screenWidth = 1280;
@@ -105,7 +115,10 @@ namespace SAE_DEV.Screens
             {
                 _tiledMap = Content.Load<TiledMap>("map2");
             }
-            
+
+            _textureCoeurPlein = Content.Load<Texture2D>("coeurPlein");
+            _textureCoeurVide = Content.Load<Texture2D>("coeurVide");
+
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -131,7 +144,7 @@ namespace SAE_DEV.Screens
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float walkSpeed = deltaTime * Perso.vitesse_mvt;
 
-            //Console.WriteLine(" x : " + Mouse.GetState().X +" y : " + Mouse.GetState().Y);
+            
 
             Perso.Update();
 

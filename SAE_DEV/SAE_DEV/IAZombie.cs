@@ -29,6 +29,7 @@ namespace SAE_DEV
         public float Speed { get => speed; set => speed = value; }
         internal Zombie Zombie { get => zombie; set => zombie = value; }
 
+        
         public void Update(GameTime gameTime)
         {
             if(Math.Sqrt(Math.Pow(Perso._positionPerso.X-zombie.PositionZombie.X, 2) + Math.Pow(Perso._positionPerso.Y-zombie.PositionZombie.Y, 2)) > 400)
