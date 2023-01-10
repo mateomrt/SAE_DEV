@@ -18,7 +18,6 @@ namespace SAE_DEV
     {
 
         public static AnimatedSprite _spritePerso;
-
         public static string _animationPerso;
         public static Vector2 _positionPerso;
         public static float vitesse_mvt;

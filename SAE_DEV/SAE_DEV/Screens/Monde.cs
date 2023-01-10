@@ -140,9 +140,18 @@ namespace SAE_DEV.Screens
 
 
             //Touche Y pour retourner au menu du jeu
+           
             if (Keyboard.GetState().IsKeyDown(Keys.Y))
             {
                 Game.LoadMenu();
+            }
+
+            for(int i = 0; i < zombielvl1.Length; i++)
+            {
+                if (Math.Sqrt(Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10)
+                {
+                    Game.LoadMenu();
+                }
             }
 
         }
