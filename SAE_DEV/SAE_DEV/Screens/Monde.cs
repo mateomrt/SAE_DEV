@@ -37,6 +37,10 @@ namespace SAE_DEV.Screens
 
         List<Bullet> bullets = new List<Bullet>();
         public Texture2D _spriteBullet;
+        
+        
+        public Texture2D _textureCoeurVide;
+        public Texture2D _textureCoeurPlein;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -110,7 +114,10 @@ namespace SAE_DEV.Screens
             {
                 _tiledMap = Content.Load<TiledMap>("map2");
             }
-            
+
+            _textureCoeurPlein = Content.Load<Texture2D>("coeurPlein");
+            _textureCoeurVide = Content.Load<Texture2D>("coeurVide");
+
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
