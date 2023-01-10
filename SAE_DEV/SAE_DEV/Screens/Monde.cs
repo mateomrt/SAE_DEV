@@ -22,10 +22,8 @@ namespace SAE_DEV.Screens
     internal class Monde : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
-        public static Perso character;
         Zombie[] zombielvl1;
         IAZombie[] iazombie;
-        public Texture2D gameover;
         public Vector2 positionGameOver;
 
         public static int MAP1_TAILLE = 800;
@@ -43,7 +41,6 @@ namespace SAE_DEV.Screens
         public Texture2D _textureCoeurVide;
         public Texture2D _textureCoeurPlein;
 
-        private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         private int _screenWidth;
