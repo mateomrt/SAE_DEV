@@ -11,6 +11,7 @@ using MonoGame.Extended.Tiled.Renderers;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
+using SAE_DEV.Screens;
 
 namespace SAE_DEV
 {
@@ -30,17 +31,66 @@ namespace SAE_DEV
 
         public void Update(GameTime gameTime)
         {
-            if(Math.Sqrt(Math.Pow(Perso._positionPerso.X-zombie.PositionZombie.X, 2) + Math.Pow(Perso._positionPerso.Y-zombie.PositionZombie.Y, 2)) > 150)
+            if(Math.Sqrt(Math.Pow(Perso._positionPerso.X-zombie.PositionZombie.X, 2) + Math.Pow(Perso._positionPerso.Y-zombie.PositionZombie.Y, 2)) > 400)
             {
                 speed = 0;
             }
             else
             {
+                Vector2 _direction = Vector2.Zero;
                 Random rand = new Random();
                 speed = rand.Next(40,65);
-                Vector2 direction = Perso._positionPerso - zombie.PositionZombie;
-                direction.Normalize();
-                zombie.PositionZombie += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                _direction = Perso._positionPerso - zombie.PositionZombie;
+                // Deplacement et collision vers la droite
+                if (_direction.X > 0)
+                {
+                    _direction.X += 1;
+                    ushort tx = (ushort)(zombie.PositionZombie.X / Monde._tiledMap.TileWidth + 0.5);
+                    ushort ty = (ushort)(zombie.PositionZombie.Y / Monde._tiledMap.TileWidth);
+                    if (Collision.IsCollision(tx, ty))
+                    {
+                        _direction.X = 0;
+                    }
+                }
+                // Deplacement et collision vers le haut 
+                if (_direction.Y < 0)
+                {
+                    _direction.Y -= 1;
+                    ushort tx = (ushort)(zombie.PositionZombie.X / Monde._tiledMap.TileWidth);
+                    ushort ty = (ushort)(zombie.PositionZombie.Y / Monde._tiledMap.TileWidth -0.5);
+                    if (Collision.IsCollision(tx, ty))
+                    {
+                        _direction.Y = 0;
+                    }
+
+                }
+                // Deplacement et collision vers le bas
+                if (_direction.Y > 0)
+                {
+                    _direction.Y += 1;
+                    ushort tx = (ushort)(zombie.PositionZombie.X / Monde._tiledMap.TileWidth);
+                    ushort ty = (ushort)(zombie.PositionZombie.Y / Monde._tiledMap.TileWidth + 0.5);
+                    if (Collision.IsCollision(tx, ty))
+                    {
+                        _direction.Y = 0;
+                    }
+
+                }
+                // Deplacement et collision vers la gauche
+                if (_direction.X < 0)
+                {
+                    _direction.X -= 1;
+                    ushort tx = (ushort)(zombie.PositionZombie.X / Monde._tiledMap.TileWidth - 0.5);
+                    ushort ty = (ushort)(zombie.PositionZombie.Y / Monde._tiledMap.TileWidth);
+                    if (Collision.IsCollision(tx, ty))
+                    {
+                        _direction.X = 0;
+                    }
+                }
+                if (_direction != Vector2.Zero)
+                    _direction.Normalize();
+
+                zombie.PositionZombie += _direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
         }
