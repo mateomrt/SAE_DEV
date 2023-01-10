@@ -18,7 +18,6 @@ namespace SAE_DEV
     {
 
         public static AnimatedSprite _spritePerso;
-
         public static string _animationPerso;
         public static Vector2 _positionPerso;
         public static float vitesse_mvt;
@@ -37,7 +36,7 @@ namespace SAE_DEV
         }
         public static void Update()
         {
-            _animationPerso = "idle";   
+            _animationPerso = "idle";
         }
         public static void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch)
         {
