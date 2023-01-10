@@ -16,6 +16,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Content;
 using System.Diagnostics.Metrics;
+using Transform;
 
 namespace SAE_DEV.Screens
 {
@@ -28,7 +29,7 @@ namespace SAE_DEV.Screens
 
         public static int MAP1_TAILLE = 800;
         public static int MAP2_TAILLE = 560;
-        public const int nbZombie = 20;
+        public const int nbZombie = 0;
         public static TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
 
@@ -36,8 +37,9 @@ namespace SAE_DEV.Screens
 
         List<Bullet> bullets = new List<Bullet>();
         public Texture2D _spriteBullet;
-        
-        
+
+        public static Matrix transformMatrix;
+
         public Texture2D _textureCoeurVide;
         public Texture2D _textureCoeurPlein;
 
@@ -45,6 +47,8 @@ namespace SAE_DEV.Screens
 
         private int _screenWidth;
         private int _screenHeight;
+
+
 
         public Monde(Game1 game) : base(game)
         {
@@ -148,12 +152,12 @@ namespace SAE_DEV.Screens
             //On vérifie si une touche est pressée DANS cette classe
             Touche.Presse(Perso._positionPerso, _tiledMap, Perso._animationPerso, walkSpeed, deltaTime);
 
-
             // Creation des balles et mise à jour
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
+            previousState = currentState;
+            currentState = Mouse.GetState();
+            if (currentState.LeftButton == ButtonState.Pressed &&
+                previousState.LeftButton == ButtonState.Released)
                 CreateBullet();
-            }
             foreach (Bullet bullet in bullets)
             {
                 bullet.Update(gameTime);
@@ -207,14 +211,13 @@ namespace SAE_DEV.Screens
             {
                 Game.LoadGameOver();
             }
-
         }
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
 
             //On met en place la caméra
-            var transformMatrix = Camera._camera.GetViewMatrix();
+            transformMatrix = Camera._camera.GetViewMatrix();
             _spriteBatch.Begin(transformMatrix: transformMatrix);
 
             //On dessine notre Perso
@@ -258,12 +261,19 @@ namespace SAE_DEV.Screens
 
             _spriteBatch.End();
 
-            Console.WriteLine(Perso.vie);
+            Console.WriteLine("Perso x :" + Math.Round(Perso._positionPerso.X) + " y :" + Math.Round(Perso._positionPerso.Y));
         }
 
         private void CreateBullet()
         {
-            bullets.Add(new Bullet(Perso._positionPerso, Vector2.Normalize(Mouse.GetState().Position.ToVector2() - Perso._positionPerso), _spriteBullet));
+            Vector2 test = ScreenToWorldSpace(Mouse.GetState().Position.ToVector2(), transformMatrix);
+            bullets.Add(new Bullet(Perso._positionPerso, Vector2.Normalize(test - Perso._positionPerso), _spriteBullet));
+        }
+        
+        public Vector2 ScreenToWorldSpace(in Vector2 point, Matrix transformMatrix)
+        {
+            Matrix invertedMatrix = Matrix.Invert(transformMatrix);
+            return Vector2.Transform(point, invertedMatrix);
         }
 
     }
