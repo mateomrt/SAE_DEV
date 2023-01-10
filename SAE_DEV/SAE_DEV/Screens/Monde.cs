@@ -25,7 +25,6 @@ namespace SAE_DEV.Screens
         private new Game1 Game => (Game1)base.Game;
         Zombie[] zombielvl1;
         IAZombie[] iazombie;
-        public Texture2D gameover;
         public Vector2 positionGameOver;
 
         public static int MAP1_TAILLE = 800;
@@ -38,8 +37,10 @@ namespace SAE_DEV.Screens
 
         List<Bullet> bullets = new List<Bullet>();
         public Texture2D _spriteBullet;
-        
-        
+        MouseState currentState;
+        MouseState previousState;
+
+
         public Texture2D _textureCoeurVide;
         public Texture2D _textureCoeurPlein;
 
