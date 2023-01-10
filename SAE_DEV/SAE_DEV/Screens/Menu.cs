@@ -70,7 +70,7 @@ namespace SAE_DEV.Screens
             
 
         }
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime) 
         {
             GraphicsDevice.Clear(Color.Black);
 

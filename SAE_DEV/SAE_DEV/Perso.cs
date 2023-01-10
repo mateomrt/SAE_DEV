@@ -18,7 +18,6 @@ namespace SAE_DEV
     {
 
         public static AnimatedSprite _spritePerso;
-
         public static string _animationPerso;
         public static Vector2 _positionPerso;
         public static float vitesse_mvt;
@@ -28,7 +27,7 @@ namespace SAE_DEV
         {
             //Initialisation de la position et de la vitesse du personnage
             _positionPerso = new Vector2(150, 250);
-            vitesse_mvt = 70 ;
+            vitesse_mvt = 200 ;
         }
         public static void LoadContent(SpriteSheet spriteSheet)
         {
