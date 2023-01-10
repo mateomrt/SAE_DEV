@@ -29,7 +29,7 @@ namespace SAE_DEV.Screens
 
         public static int MAP1_TAILLE = 800;
         public static int MAP2_TAILLE = 560;
-        public const int nbZombie = 0;
+        public const int nbZombie = 20;
         public static TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
 
@@ -50,6 +50,8 @@ namespace SAE_DEV.Screens
         private int _screenWidth;
         private int _screenHeight;
 
+        Random random = new Random();
+
 
 
         public Monde(Game1 game) : base(game)
@@ -61,7 +63,7 @@ namespace SAE_DEV.Screens
         public override void Initialize()
         {
 
-            Random random = new Random();
+            
 
             zombielvl1 = new Zombie[nbZombie];
             iazombie = new IAZombie[nbZombie];
@@ -197,12 +199,39 @@ namespace SAE_DEV.Screens
             {
                 if (Math.Sqrt(
                     Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + 
-                    Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10)
+                    Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 1)
                 {
 
                     Perso.vie -= 1;
                     Perso._positionPerso = new Vector2(150,250);
                     
+                }
+            }
+
+            for(int i = 0; i < bullets.Count; i++)
+            {
+                for(int j = 0; j < zombielvl1.Length; j++)
+                {
+                    if(Math.Sqrt(
+                    Math.Pow(bullets[i].Position.X - zombielvl1[j].PositionZombie.X, 2) +
+                    Math.Pow(bullets[i].Position.Y - zombielvl1[j].PositionZombie.Y, 2)) < 20)
+                    {
+                        if (Game1._choixMap == 1)
+                        {
+                            do
+                            {
+                                zombielvl1[j].PositionZombie = new Vector2(random.Next(518, 1078), random.Next(354, 598));
+                            } while (zombielvl1[j].PositionZombie.X > 1078 && zombielvl1[j].PositionZombie.X < 518 && zombielvl1[j].PositionZombie.Y > 598 && zombielvl1[j].PositionZombie.Y < 354);
+
+                        }
+                        if (Game1._choixMap == 2)
+                        {
+                            do
+                            {
+                                zombielvl1[j].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
+                            } while (zombielvl1[j].PositionZombie.X > 1036 && zombielvl1[j].PositionZombie.X < 244 && zombielvl1[j].PositionZombie.Y > 556 && zombielvl1[j].PositionZombie.Y < 138);
+                        }
+                    }
                 }
             }
             
