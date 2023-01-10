@@ -15,6 +15,7 @@ using MonoGame.Extended.Sprites;
 using MonoGame.Extended;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Content;
+using System.Diagnostics.Metrics;
 
 namespace SAE_DEV.Screens
 {
@@ -33,6 +34,9 @@ namespace SAE_DEV.Screens
         private TiledMapRenderer _tiledMapRenderer;
 
         public static SpriteSheet _spritePerso;
+
+        List<Bullet> bullets = new List<Bullet>();
+        public Texture2D _spriteBullet;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -94,6 +98,7 @@ namespace SAE_DEV.Screens
 
             //Chargement texture Perso
             _spritePerso = Content.Load<SpriteSheet>("elf_spritesheet.sf", new JsonContentLoader());
+            _spriteBullet = Content.Load<Texture2D>("Bullet");
             Perso.LoadContent(_spritePerso);
 
             for (int i = 0; i < zombielvl1.Length; i++)
@@ -118,6 +123,15 @@ namespace SAE_DEV.Screens
 
             //On vérifie si une touche est pressée DANS cette classe
             Touche.Presse(Perso._positionPerso, _tiledMap, Perso._animationPerso, walkSpeed, deltaTime);
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                CreateBullet();
+            }
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.Update(gameTime);
+            }
 
             //On joue ici l'animation du perso
             Perso._spritePerso.Play(Perso._animationPerso);
@@ -163,11 +177,21 @@ namespace SAE_DEV.Screens
                 zombielvl1[i].Draw(_spriteBatch);
             }
 
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.Draw(_spriteBatch);
+            }
+
             //On dessine la map avec la "vision" de la caméra
             _tiledMapRenderer.Draw(transformMatrix);
 
             _spriteBatch.End();
 
+        }
+
+        private void CreateBullet()
+        {
+            bullets.Add(new Bullet(Perso._positionPerso, Vector2.Normalize(Mouse.GetState().Position.ToVector2() - Perso._positionPerso), _spriteBullet));
         }
 
     }

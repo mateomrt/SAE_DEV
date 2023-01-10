@@ -32,7 +32,7 @@ namespace SAE_DEV
         public void Draw(SpriteBatch spriteBatch)
         {
             // Just draw the texture we have at the rectangle x and y.
-            spriteBatch.Draw();
+            spriteBatch.Draw(sprite, _position, Color.White);
         }
 
         public void Update(GameTime gameTime)
