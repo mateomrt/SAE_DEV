@@ -12,7 +12,7 @@ using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using System.Reflection.Metadata;
-
+using SAE_DEV.Screens;
 
 namespace SAE_DEV
 {
@@ -90,11 +90,7 @@ namespace SAE_DEV
             }
         }
 
-        public void Initialize(Game game)
-        {
-            Random random = new Random();
-            _vitesseZombie = random.Next(30, 31);
-        }
+        
 
         public void LoadContent(Game game)
         {
