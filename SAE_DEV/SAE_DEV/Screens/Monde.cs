@@ -16,16 +16,15 @@ using MonoGame.Extended;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Content;
 using System.Diagnostics.Metrics;
+using Transform;
 
 namespace SAE_DEV.Screens
 {
     internal class Monde : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
-        public static Perso character;
         Zombie[] zombielvl1;
         IAZombie[] iazombie;
-        public Texture2D gameover;
         public Vector2 positionGameOver;
 
         public static int MAP1_TAILLE = 800;
@@ -154,12 +153,12 @@ namespace SAE_DEV.Screens
             //On vérifie si une touche est pressée DANS cette classe
             Touche.Presse(Perso._positionPerso, _tiledMap, Perso._animationPerso, walkSpeed, deltaTime);
 
-
             // Creation des balles et mise à jour
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
+            previousState = currentState;
+            currentState = Mouse.GetState();
+            if (currentState.LeftButton == ButtonState.Pressed &&
+                previousState.LeftButton == ButtonState.Released)
                 CreateBullet();
-            }
             foreach (Bullet bullet in bullets)
             {
                 bullet.Update(gameTime);
@@ -208,7 +207,6 @@ namespace SAE_DEV.Screens
             {
                 Game.LoadGameOver();
             }
-
         }
         public override void Draw(GameTime gameTime)
         {
