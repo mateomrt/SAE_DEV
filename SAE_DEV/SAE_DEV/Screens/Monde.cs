@@ -37,6 +37,8 @@ namespace SAE_DEV.Screens
 
         List<Bullet> bullets = new List<Bullet>();
         public Texture2D _spriteBullet;
+        public MouseState previousState;
+        public MouseState currentState;
 
         public static Matrix transformMatrix;
 
