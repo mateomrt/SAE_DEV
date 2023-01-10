@@ -265,7 +265,6 @@ namespace SAE_DEV.Screens
         private void CreateBullet()
         {
             Vector2 test = ScreenToWorldSpace(Mouse.GetState().Position.ToVector2(), transformMatrix);
-            Console.WriteLine("Souris x : " + Math.Round(test.X) + "y : " + Math.Round(test.Y));
             bullets.Add(new Bullet(Perso._positionPerso, Vector2.Normalize(test - Perso._positionPerso), _spriteBullet));
         }
         
