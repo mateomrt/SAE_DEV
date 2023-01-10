@@ -16,13 +16,13 @@ using MonoGame.Extended;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Content;
 using System.Diagnostics.Metrics;
+using Transform;
 
 namespace SAE_DEV.Screens
 {
     internal class Monde : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
-        public static Perso character;
         Zombie[] zombielvl1;
         IAZombie[] iazombie;
 
@@ -37,6 +37,8 @@ namespace SAE_DEV.Screens
 
         List<Bullet> bullets = new List<Bullet>();
         public Texture2D _spriteBullet;
+        MouseState currentState;
+        private MouseState previousState;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -130,19 +132,19 @@ namespace SAE_DEV.Screens
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float walkSpeed = deltaTime * Perso.vitesse_mvt;
 
-            Console.WriteLine(" x : " + Mouse.GetState().X +" y : " + Mouse.GetState().Y);
+            //Console.WriteLine(" x : " + Mouse.GetState().X +" y : " + Mouse.GetState().Y);
 
             Perso.Update();
 
             //On vérifie si une touche est pressée DANS cette classe
             Touche.Presse(Perso._positionPerso, _tiledMap, Perso._animationPerso, walkSpeed, deltaTime);
 
-
             // Creation des balles et mise à jour
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
+            previousState = currentState;
+            currentState = Mouse.GetState();
+            if (currentState.LeftButton == ButtonState.Pressed &&
+                previousState.LeftButton == ButtonState.Released)
                 CreateBullet();
-            }
             foreach (Bullet bullet in bullets)
             {
                 bullet.Update(gameTime);
@@ -183,7 +185,6 @@ namespace SAE_DEV.Screens
                     Game.LoadMenu();
                 }
             }
-
         }
         public override void Draw(GameTime gameTime)
         {
@@ -215,7 +216,9 @@ namespace SAE_DEV.Screens
 
         private void CreateBullet()
         {
-            bullets.Add(new Bullet(Perso._positionPerso, Vector2.Normalize(Mouse.GetState().Position.ToVector2() - Perso._positionPerso), _spriteBullet));
+            bullets.Add(new Bullet(Perso._positionPerso,
+                            Vector2.Normalize(Mouse.GetState().Position.ToVector2() - Perso._positionPerso),
+                            _spriteBullet));
         }
 
     }
