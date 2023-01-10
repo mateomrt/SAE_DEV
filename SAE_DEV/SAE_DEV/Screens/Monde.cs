@@ -35,7 +35,10 @@ namespace SAE_DEV.Screens
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        
+
+        List<Bullet> objects = new List<Bullet>();
+
+
         private int _screenWidth;
         private int _screenHeight;
 
@@ -74,6 +77,7 @@ namespace SAE_DEV.Screens
 
             base.Initialize();
         }
+
         public override void LoadContent()
         {
             _tiledMap = Content.Load<TiledMap>("map1");
@@ -89,7 +93,6 @@ namespace SAE_DEV.Screens
             {
                 zombielvl1[i].LoadContent(Game);
             }
-            
 
             base.LoadContent();
         }
@@ -134,7 +137,13 @@ namespace SAE_DEV.Screens
             {
                 Game.LoadMenu();
             }
-            
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                Vector2 mousePos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+                Bullet obj = new Bullet(Perso._positionPerso, mousePos, );
+            }
+
         }
         public override void Draw(GameTime gameTime)
         {

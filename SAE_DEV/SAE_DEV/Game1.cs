@@ -21,6 +21,7 @@ namespace SAE_DEV
     {
         public static int MAP1_TAILLE = 800;
         public static int MAP2_TAILLE = 560;
+        public float deltaTime;
         private KeyboardState _keyboardState;
         private GraphicsDeviceManager _graphics;
         public static int _screenWidth = 1280;
@@ -83,7 +84,7 @@ namespace SAE_DEV
 
         protected override void Update(GameTime gameTime)
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
             _keyboardState = Keyboard.GetState();
 
 
