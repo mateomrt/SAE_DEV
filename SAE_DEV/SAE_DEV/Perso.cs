@@ -38,7 +38,7 @@ namespace SAE_DEV
         }
         public static void Update()
         {
-            _animationPerso = "idle";   
+            _animationPerso = "idle";
         }
         public static void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch)
         {
