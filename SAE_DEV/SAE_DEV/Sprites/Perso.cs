@@ -1,16 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using MonoGame.Extended.Serialization;
+﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended.Sprites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MonoGame.Extended.Content;
-using Microsoft.Xna.Framework.Input;
-using System.Diagnostics.Metrics;
-using SAE_DEV.Screens;
 
 namespace SAE_DEV
 {

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended.Screens;
-using MonoGame.Extended.Sprites;
-using SAE_DEV;
 using SAE_DEV.Screens;
 
 namespace SAE_DEV
