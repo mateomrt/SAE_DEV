@@ -29,7 +29,7 @@ namespace SAE_DEV.Screens
 
         public static int MAP1_TAILLE = 800;
         public static int MAP2_TAILLE = 560;
-        public const int nbZombie = 20;
+        public const int nbZombie = 50;
         public static TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
 
@@ -44,8 +44,18 @@ namespace SAE_DEV.Screens
 
         public Texture2D _textureCoeurVide;
         public Texture2D _textureCoeurPlein;
+        
+        public Texture2D _textureZQSD;
+        public Texture2D _textureFlecheDirectionnelle;
+        public Texture2D _textureCliqueGauche;
+        public Texture2D _texturePhraseFonction;
 
         private SpriteBatch _spriteBatch;
+        
+        
+        private float _chrono;
+        private bool _affiche;
+
 
         private int _screenWidth;
         private int _screenHeight;
@@ -107,6 +117,9 @@ namespace SAE_DEV.Screens
             var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, _screenWidth, _screenHeight);
             Camera.Initialise(viewportAdapter);
 
+
+            _chrono = 0;
+            _affiche = true;
             
             base.Initialize();
         }
@@ -124,6 +137,12 @@ namespace SAE_DEV.Screens
 
             _textureCoeurPlein = Content.Load<Texture2D>("coeurPlein");
             _textureCoeurVide = Content.Load<Texture2D>("coeurVide");
+            
+            
+            _textureCliqueGauche = Content.Load<Texture2D>("cliqueGauche");
+            _textureFlecheDirectionnelle = Content.Load<Texture2D>("flecheDirectionnelle");
+            _textureZQSD = Content.Load<Texture2D>("zqsd");
+            _texturePhraseFonction = Content.Load<Texture2D>("phraseFonction");
 
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
 
@@ -226,11 +245,21 @@ namespace SAE_DEV.Screens
                     }
                 }
             }
-            
+
+
+            // CHRONO POUR L4AFFICHAGE DES COMMANDES
+            _chrono = _chrono + 1 * deltaTime;
+            if (_chrono > 5)
+            {
+                _affiche = false;
+            }
+            else
+                _affiche = true;
 
 
 
-            if(Perso.vie == 0)
+
+            if (Perso.vie == 0)
             {
                 Game.LoadGameOver();
             }
@@ -281,6 +310,16 @@ namespace SAE_DEV.Screens
             {
                 _spriteBatch.Draw(_textureCoeurVide, new Vector2(_postionCoeur.X + 40 + (80 * Perso.vie) + 80 * i, _postionCoeur.Y), Color.White);
             }
+
+            //AFFICHAGE DES COMMANDES
+            if (_affiche)
+            {
+                _spriteBatch.Draw(_textureZQSD, new Vector2(400, 550), Color.White);
+                _spriteBatch.Draw(_textureFlecheDirectionnelle, new Vector2(230, 550), Color.White);
+                _spriteBatch.Draw(_textureCliqueGauche, new Vector2(930, 550), Color.White);
+                _spriteBatch.Draw(_texturePhraseFonction, new Vector2(190, 500), Color.White);
+            }
+            
 
             _spriteBatch.End();
 
