@@ -19,6 +19,7 @@ using System.Diagnostics.Metrics;
 using Transform;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SAE_DEV.Screens
 {
@@ -36,6 +37,7 @@ namespace SAE_DEV.Screens
         private TiledMapRenderer _tiledMapRenderer;
 
         public static SpriteSheet _spritePerso;
+
 
         List<Bullet> bullets = new List<Bullet>();
         public Texture2D _spriteBullet;
@@ -57,8 +59,11 @@ namespace SAE_DEV.Screens
         private bool _affichePhraseInvinsible;
 
         private SpriteBatch _spriteBatch;
-        
-        
+
+        private SpriteFont font;
+        private string text;
+        private int score;
+
         private float _chrono;
         private float _chronoInvincible;
         private bool _affiche;
@@ -84,12 +89,11 @@ namespace SAE_DEV.Screens
         public override void Initialize()
         {
 
-            
-
             zombielvl1 = new Zombie[nbZombie];
             iazombie = new IAZombie[nbZombie];
             
-            
+            score = 0;
+            text = "Score : " + score.ToString();
 
             for (int i = 0; i < zombielvl1.Length; i++)
             {
@@ -169,6 +173,9 @@ namespace SAE_DEV.Screens
             _spritePerso = Content.Load<SpriteSheet>("elf_spritesheet.sf", new JsonContentLoader());
             _spriteBullet = Content.Load<Texture2D>("Bullet");
             Perso.LoadContent(_spritePerso);
+
+            // CHARGEMENT DE LA FONT
+            font = Content.Load<SpriteFont>("nosifer");
 
             for (int i = 0; i < zombielvl1.Length; i++)
             {
@@ -272,11 +279,17 @@ namespace SAE_DEV.Screens
                     {
 
                         zombielvl1[j].SpawnDuZombie();
-
                         bullets.Remove(bullet);
-                        
+                        score++;
+                        text = "Score :" + score.ToString();
                     }
                 }
+            }
+
+            foreach(Bullet bullet in bullets.ToArray())
+            {
+                if(bullet.BulletCollision())
+                    bullets.Remove(bullet);
             }
 
 
@@ -358,7 +371,10 @@ namespace SAE_DEV.Screens
                 _spriteBatch.Draw(_texturePhraseInvincible, new Vector2(100, 400), Color.White);
             }
 
-            
+            // AFFICHAGE DU SCORE
+            Vector2 textMiddlePoint = font.MeasureString(text) / 2;
+            Vector2 position = new Vector2(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height - 40);
+            _spriteBatch.DrawString(font, text, position, new Color(159,2,2), 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
 
 
             _spriteBatch.End();

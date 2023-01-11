@@ -20,6 +20,8 @@ namespace SAE_DEV
 
         private Texture2D sprite;
 
+        public bool collision;
+
         public Bullet(Vector2 position, Vector2 direction, Texture2D bulletSprite)
         {
             this.Position = position;
@@ -38,17 +40,24 @@ namespace SAE_DEV
         public void Update(GameTime gameTime)
         {
             float _timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            collision = false;
 
             Position += _direction * LinearVelocity;
 
+            BulletCollision();
+        }
+
+        public bool BulletCollision()
+        {
+            collision = false;
             ushort tx = (ushort)(Position.X / Monde._tiledMap.TileWidth);
             ushort ty = (ushort)(Position.Y / Monde._tiledMap.TileWidth);
 
 
             if (Collision.IsCollision(tx, ty))
-            {
-                Position = new Vector2(0,0);
-            }
+                collision = true;
+
+            return collision;
         }
     }
 }
