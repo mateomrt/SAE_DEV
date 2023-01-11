@@ -56,6 +56,7 @@ namespace SAE_DEV.Screens
         
         
         private float _chrono;
+        private float _chronoInvincible;
         private bool _affiche;
 
 
@@ -65,6 +66,8 @@ namespace SAE_DEV.Screens
         private Song _rhoff;
 
         Random random = new Random();
+        private bool EstInvincible;
+
 
 
 
@@ -90,18 +93,18 @@ namespace SAE_DEV.Screens
 
                 if (Game1._choixMap == 1)
                 {
-                    do
-                    {
-                        zombielvl1[i].PositionZombie = new Vector2(random.Next(518, 1078), random.Next(354, 598));
-                    } while (zombielvl1[i].PositionZombie.X > 1078 && zombielvl1[i].PositionZombie.X < 518 && zombielvl1[i].PositionZombie.Y > 598 && zombielvl1[i].PositionZombie.Y < 354);
+                    
+                    
+                    zombielvl1[i].PositionZombie = new Vector2(random.Next(518, 1078), random.Next(354, 598));
+                    
                     
                 }
                 if (Game1._choixMap == 2)
                 {
-                    do
-                    {
-                        zombielvl1[i].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
-                    } while (zombielvl1[i].PositionZombie.X > 1036 && zombielvl1[i].PositionZombie.X < 244 && zombielvl1[i].PositionZombie.Y > 556 && zombielvl1[i].PositionZombie.Y < 138);
+                    
+                    zombielvl1[i].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
+                    
+                    
                 }
                 
 
@@ -159,6 +162,7 @@ namespace SAE_DEV.Screens
             for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i].LoadContent(Game);
+                zombielvl1[i].SpawnDuZombie();
             }
 
             _rhoff = Content.Load<Song>("Rohff - La Puissance");
@@ -219,20 +223,29 @@ namespace SAE_DEV.Screens
             {
                 Game.LoadMenu();
             }
-
+            
             for(int i = 0; i < zombielvl1.Length; i++)
             {
                 if (Math.Sqrt(
                     Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + 
-                    Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 1)
+                    Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10 && EstInvincible == false)
                 {
 
                     Perso.vie -= 1;
-                    Perso._positionPerso = new Vector2(150,250);
-                    
+                    EstInvincible = true;
+                    _chronoInvincible = 0 + 1 * deltaTime;
+                    //Perso._positionPerso = new Vector2(150,250);
+
                 }
             }
+            
 
+            if(_chronoInvincible > 5)
+            {
+                EstInvincible = false;
+            }
+            
+            
             foreach (Bullet bullet in bullets.ToArray()) 
             {
                 for(int j = 0; j < zombielvl1.Length; j++)
@@ -241,26 +254,8 @@ namespace SAE_DEV.Screens
                     Math.Pow(bullet.Position.X - zombielvl1[j].PositionZombie.X, 2) +
                     Math.Pow(bullet.Position.Y - zombielvl1[j].PositionZombie.Y, 2)) < 12)
                     {
-                        
-                        
-                        
-                        
-                        
-                        if (Game1._choixMap == 1)
-                        {
-                            do
-                            {
-                                zombielvl1[j].PositionZombie = new Vector2(random.Next(518, 1078), random.Next(354, 598));
-                            } while (zombielvl1[j].PositionZombie.X > 1078 && zombielvl1[j].PositionZombie.X < 518 && zombielvl1[j].PositionZombie.Y > 598 && zombielvl1[j].PositionZombie.Y < 354);
 
-                        }
-                        if (Game1._choixMap == 2)
-                        {
-                            do
-                            {
-                                zombielvl1[j].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
-                            } while (zombielvl1[j].PositionZombie.X > 1036 && zombielvl1[j].PositionZombie.X < 244 && zombielvl1[j].PositionZombie.Y > 556 && zombielvl1[j].PositionZombie.Y < 138);
-                        }
+                        zombielvl1[j].SpawnDuZombie();
 
                         bullets.Remove(bullet);
                         
