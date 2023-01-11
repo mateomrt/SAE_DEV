@@ -51,6 +51,10 @@ namespace SAE_DEV.Screens
         public Texture2D _textureFlecheDirectionnelle;
         public Texture2D _textureCliqueGauche;
         public Texture2D _texturePhraseFonction;
+        public Texture2D _texturePhraseInvincible;
+
+
+        private bool _affichePhraseInvinsible;
 
         private SpriteBatch _spriteBatch;
         
@@ -126,7 +130,9 @@ namespace SAE_DEV.Screens
 
             _chrono = 0;
             _affiche = true;
-            
+            _affichePhraseInvinsible = false;
+
+
             base.Initialize();
         }
 
@@ -149,6 +155,11 @@ namespace SAE_DEV.Screens
             _textureFlecheDirectionnelle = Content.Load<Texture2D>("flecheDirectionnelle");
             _textureZQSD = Content.Load<Texture2D>("zqsd");
             _texturePhraseFonction = Content.Load<Texture2D>("phraseFonction");
+
+
+
+            _texturePhraseInvincible = Content.Load<Texture2D>("phraseInvincible");
+
 
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
 
@@ -238,6 +249,12 @@ namespace SAE_DEV.Screens
 
                 }
             }
+            if (EstInvincible == true)
+            {
+                _affichePhraseInvinsible = true;
+            }
+            else
+                _affichePhraseInvinsible = false;
             Console.WriteLine(_chronoInvincible);
             if(_chronoInvincible > 5)
             {
@@ -336,7 +353,14 @@ namespace SAE_DEV.Screens
                 _spriteBatch.Draw(_textureCliqueGauche, new Vector2(930, 550), Color.White);
                 _spriteBatch.Draw(_texturePhraseFonction, new Vector2(190, 500), Color.White);
             }
+
+            if (_affichePhraseInvinsible == true)
+            {
+                _spriteBatch.Draw(_texturePhraseInvincible, new Vector2(100, 400), Color.White);
+            }
+
             
+
 
             _spriteBatch.End();
 
