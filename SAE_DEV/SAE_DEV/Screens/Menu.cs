@@ -37,7 +37,9 @@ namespace SAE_DEV.Screens
             _posmap2 = new Vector2(741, 300);
             _posmapCapture1 = new Vector2(0, 0);
             _posmapCapture2 = new Vector2(650, 0);
+            
             _isClicked = false;
+            
             Game1._choixMap = 0;
 
             base.Initialize();

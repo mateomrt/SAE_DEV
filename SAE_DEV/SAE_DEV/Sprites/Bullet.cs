@@ -27,13 +27,14 @@ namespace SAE_DEV
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            // Just draw the texture we have at the rectangle x and y.
+            // On dessine la texture
             spriteBatch.Draw(_sprite, Position, Color.White);
         }
 
         public void Update(GameTime gameTime)
         {
             float _timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             _collision = false;
             Position += _direction * LinearVelocity;
 

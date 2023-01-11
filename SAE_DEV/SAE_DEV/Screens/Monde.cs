@@ -21,19 +21,22 @@ namespace SAE_DEV.Screens
         Zombie[] zombielvl1;
         IAZombie[] iazombie;
         List<Bullet> bullets = new List<Bullet>();
+        
+        
         Random random = new Random();
         
-
+        
         public const int nbZombie = 120;
-        private TiledMapRenderer _tiledMapRenderer;
+        
 
-        public static SpriteSheet _spritePerso;
 
         public MouseState previousState;
         public MouseState currentState;
 
-        public Matrix transformMatrix;
+        public Matrix transformMatrix; // Pour la caméra
 
+        // On déclare toute les textures
+        private TiledMapRenderer _tiledMapRenderer;
         public static TiledMap _tiledMap;
         public Texture2D _spriteBullet;
         public Texture2D _textureCoeurVide;
@@ -44,6 +47,7 @@ namespace SAE_DEV.Screens
         public Texture2D _texturePhraseFonction;
         public Texture2D _texturePhraseInvincible;
         private SpriteBatch _spriteBatch;
+        public static SpriteSheet _spritePerso;
 
         private SpriteFont _font;
         private string _text;
@@ -59,7 +63,6 @@ namespace SAE_DEV.Screens
         private int _screenWidth;
         private int _screenHeight;
 
-        private Song _rhoff;
         private Song _ball;
         private Song _death;
 
@@ -71,10 +74,15 @@ namespace SAE_DEV.Screens
 
         public override void Initialize()
         {
-            //Initialisation des zombie, du perso et de l'IA des zombie
+            //Initialisation des zombie, du perso et de l'IA des zombies
             zombielvl1 = new Zombie[nbZombie];
             iazombie = new IAZombie[nbZombie];
+            
+            
             Perso.Initialize();
+            
+            
+            // On fait spawn les zombies au bon endroit
             for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i] = new Zombie();
@@ -100,8 +108,9 @@ namespace SAE_DEV.Screens
             var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, _screenWidth, _screenHeight);
             Camera.Initialise(viewportAdapter);
 
-            //Initialisation des chrono
+            //Initialisation du chrono
             _chrono = 0;
+            
             _affiche = true;
             _affichePhraseInvinsible = false;
 
@@ -111,6 +120,8 @@ namespace SAE_DEV.Screens
 
         public override void LoadContent()
         {
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            
             //Load des map
             if (Game1._choixMap == 1)
             {
@@ -121,15 +132,13 @@ namespace SAE_DEV.Screens
                 _tiledMap = Content.Load<TiledMap>("map2");
             }
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-
-            //Load des coeur
+            
+            //Load des textures des coeurs
             _textureCoeurPlein = Content.Load<Texture2D>("coeurPlein");
             _textureCoeurVide = Content.Load<Texture2D>("coeurVide");
             
             
-            //Load des touche, de la phrase invincible
+            //Load des écritures
             _textureCliqueGauche = Content.Load<Texture2D>("cliqueGauche");
             _textureFlecheDirectionnelle = Content.Load<Texture2D>("flecheDirectionnelle");
             _textureZQSD = Content.Load<Texture2D>("zqsd");
@@ -139,8 +148,11 @@ namespace SAE_DEV.Screens
 
             //Chargement texture Perso
             _spritePerso = Content.Load<SpriteSheet>("elf_spritesheet.sf", new JsonContentLoader());
-            _spriteBullet = Content.Load<Texture2D>("Bullet");
             Perso.LoadContent(_spritePerso);
+            
+            
+            _spriteBullet = Content.Load<Texture2D>("Bullet");
+            
 
             // CHARGEMENT DE LA FONT
             _font = Content.Load<SpriteFont>("nosifer");
@@ -155,8 +167,7 @@ namespace SAE_DEV.Screens
             //Load des sons
             _ball = Content.Load<Song>("bruitBalle");
             _death = Content.Load<Song>("scream");
-            _rhoff = Content.Load<Song>("Rohff - La Puissance");
-            MediaPlayer.Play(_rhoff);
+            
 
             base.LoadContent();
         }
@@ -168,10 +179,10 @@ namespace SAE_DEV.Screens
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float walkSpeed = deltaTime * Perso._vitesse_mvt;
 
-            
             //Update du perso
             Perso.Update();
             Touche.Presse(Perso._positionPerso, _tiledMap, Perso._animationPerso, walkSpeed, deltaTime);
+            
             Perso._spritePerso.Play(Perso._animationPerso);
             Perso._spritePerso.Update(deltaTime);
 
@@ -180,6 +191,7 @@ namespace SAE_DEV.Screens
             // Creation des balles et mise à jour collisison
             previousState = currentState;
             currentState = Mouse.GetState();
+            
             if (currentState.LeftButton == ButtonState.Pressed &&
                 previousState.LeftButton == ButtonState.Released)
             {
@@ -208,6 +220,7 @@ namespace SAE_DEV.Screens
             }
 
 
+            //Retour au menu avec Y
             if (Keyboard.GetState().IsKeyDown(Keys.Y))
             {
                 Game.LoadMenu();
@@ -216,6 +229,7 @@ namespace SAE_DEV.Screens
 
             //Collision du perso avec le zombie et chrono de l'invincibilité         
             _chronoInvincible += 1 * deltaTime;
+
             for (int i = 0; i < zombielvl1.Length; i++)
             {
                 if (Math.Sqrt(
@@ -268,7 +282,7 @@ namespace SAE_DEV.Screens
             }
 
 
-            // CHRONO POUR L4AFFICHAGE DES COMMANDES
+            // CHRONO POUR L'AFFICHAGE DES COMMANDES EN DEBUT DE JEU
             _chrono = _chrono + 1 * deltaTime;
             if (_chrono > 5)
             {
@@ -282,7 +296,7 @@ namespace SAE_DEV.Screens
         {
             GraphicsDevice.Clear(Color.Black);
 
-            //On met en place la caméra
+            //On met en place la caméra on Draw à travers elle
             transformMatrix = Camera._camera.GetViewMatrix();
             _spriteBatch.Begin(transformMatrix: transformMatrix);
 
@@ -328,6 +342,7 @@ namespace SAE_DEV.Screens
                 _spriteBatch.Draw(_texturePhraseFonction, new Vector2(190, 500), Color.White);
             }
 
+            //Affichge phrase incinsible
             if (_affichePhraseInvinsible == true)
             {
                 _spriteBatch.Draw(_texturePhraseInvincible, new Vector2(100, 100), Color.White);
@@ -337,11 +352,8 @@ namespace SAE_DEV.Screens
             Vector2 textMiddlePoint = _font.MeasureString(_text) / 2;
             Vector2 position = new Vector2(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height - 40);
             _spriteBatch.DrawString(_font, _text, position, new Color(159,2,2), 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
+            
             _spriteBatch.End();
-
-            
-            
-
         }
 
         private void CreateBullet()

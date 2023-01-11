@@ -91,7 +91,9 @@ namespace SAE_DEV
 
         public void SpawnDuZombie()
         {
+            
             //SPAWN DES ZOMBIE EN DEHORS DES BATIMENTS
+            
             bool posvalide = false;
             do
             {

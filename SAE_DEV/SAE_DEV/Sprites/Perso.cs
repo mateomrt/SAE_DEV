@@ -27,6 +27,7 @@ namespace SAE_DEV
         }
         public static void Update()
         {
+            // Position de base quand on ne bouge pas
             _animationPerso = "idle";
         }
         public static void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch)

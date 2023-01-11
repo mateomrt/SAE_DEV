@@ -245,12 +245,6 @@
 /processorParam:TextureFormat=Color
 /build:roguelikeSheet_transparent.png
 
-#begin Rohff - La Puissance.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Rohff - La Puissance.mp3
-
 #begin scream.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
