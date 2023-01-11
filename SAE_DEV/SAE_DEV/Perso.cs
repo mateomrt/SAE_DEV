@@ -28,7 +28,7 @@ namespace SAE_DEV
         {
             //Initialisation de la position et de la vitesse du personnage
             _positionPerso = new Vector2(150, 250);
-            vitesse_mvt = 200 ;
+            vitesse_mvt = 100 ;
             vie = 5;
         }
         public static void LoadContent(SpriteSheet spriteSheet)

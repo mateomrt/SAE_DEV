@@ -69,6 +69,9 @@ namespace SAE_DEV.Screens
 
         private Song _rhoff;
         private Song _ball;
+        private Song _death;
+        
+        
 
         Random random = new Random();
         private bool EstInvincible;
@@ -86,45 +89,31 @@ namespace SAE_DEV.Screens
         {
 
             
-
+            //Initialisation des zombie, du perso et de l'ia des zombie
             zombielvl1 = new Zombie[nbZombie];
             iazombie = new IAZombie[nbZombie];
-            
-            
-
+            Perso.Initialize();
             for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i] = new Zombie();
-
                 if (Game1._choixMap == 1)
                 {
-                    
-                    
                     zombielvl1[i].PositionZombie = new Vector2(random.Next(518, 1078), random.Next(354, 598));
-                    
-                    
                 }
                 if (Game1._choixMap == 2)
                 {
-                    
                     zombielvl1[i].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
-                    
-                    
                 }
-                
-
-                
-
-
                 iazombie[i] = new IAZombie(random.Next(40, 60), zombielvl1[i]);
 
             }
+            
+
+           
+
+            // INITIALISATION DE LA CAMÉRA
             _screenWidth = 1280;
             _screenHeight = 720;
-
-            Perso.Initialize();
-            positionGameOver = new Vector2(_screenWidth, _screenHeight);
-            // INITIALISATION DE LA CAMÉRA
             var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, _screenWidth, _screenHeight);
             Camera.Initialise(viewportAdapter);
 
@@ -178,6 +167,7 @@ namespace SAE_DEV.Screens
             }
 
             _ball = Content.Load<Song>("bruitBalle");
+            _death = Content.Load<Song>("scream");
 
             _rhoff = Content.Load<Song>("Rohff - La Puissance");
             MediaPlayer.Play(_rhoff);
@@ -252,7 +242,8 @@ namespace SAE_DEV.Screens
                     Perso.vie -= 1;
                     EstInvincible = true;
                     _chronoInvincible = 0;
-                    
+                    MediaPlayer.Play(_death);
+
 
                 }
             }
@@ -263,7 +254,7 @@ namespace SAE_DEV.Screens
             else
                 _affichePhraseInvinsible = false;
             Console.WriteLine(_chronoInvincible);
-            if(_chronoInvincible > 5)
+            if(_chronoInvincible > 2)
             {
                 EstInvincible = false;
             }
@@ -280,6 +271,7 @@ namespace SAE_DEV.Screens
                     {
 
                         zombielvl1[j].SpawnDuZombie();
+                        zombielvl1[j].VitesseZombie =+ 5;
                         
                         bullets.Remove(bullet);
                         

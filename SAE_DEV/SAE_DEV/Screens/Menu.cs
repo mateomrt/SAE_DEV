@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended.Screens;
 using SAE_DEV;
 using System;
@@ -27,6 +28,7 @@ namespace SAE_DEV.Screens
         private Vector2 _posmapCapture2;
 
         private bool _isClicked;
+        private Song _menu;
         private new Game1 Game => (Game1)base.Game;
 
         public Menu(Game1 game) : base(game)
@@ -55,6 +57,8 @@ namespace SAE_DEV.Screens
             _textureMap2 = Content.Load<Texture2D>("optionMap2");
             _map1 = Content.Load<Texture2D>("Map1Capture");
             _map2 = Content.Load<Texture2D>("Map2Capture");
+            _menu = Content.Load<Song>("Indian");
+            //MediaPlayer.Play(_menu);
 
             base.LoadContent();
         }

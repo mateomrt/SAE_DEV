@@ -92,6 +92,11 @@ namespace SAE_DEV
 
         
 
+        public void Initialise(Game game)
+        {
+            
+
+        }
         public void LoadContent(Game game)
         {
             SpriteSheet spritezombie = game.Content.Load<SpriteSheet>("ZombieToast_50.sf", new JsonContentLoader());
