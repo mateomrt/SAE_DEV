@@ -154,6 +154,13 @@
 /processorParam:TextureFormat=Color
 /build:Map2Capture.png
 
+#begin nosifer.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:nosifer.spritefont
+
 #begin optionMap1.png
 /importer:TextureImporter
 /processor:TextureProcessor
