@@ -29,7 +29,7 @@ namespace SAE_DEV
             {
                 Vector2 _direction = Vector2.Zero;
                 Random rand = new Random();
-                _speed = rand.Next(15,70);
+                _speed = rand.Next(15,100);
                 _direction = Perso._positionPerso - zombie.PositionZombie;
                 // Deplacement vers le perso et collision vers la droite
                 if (_direction.X > 0)
