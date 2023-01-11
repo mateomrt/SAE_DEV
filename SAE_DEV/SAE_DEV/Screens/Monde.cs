@@ -245,7 +245,6 @@ namespace SAE_DEV.Screens
                     Perso.vie -= 1;
                     EstInvincible = true;
                     _chronoInvincible = 0;
-                    //Perso._positionPerso = new Vector2(150,250);
 
                 }
             }
@@ -256,7 +255,7 @@ namespace SAE_DEV.Screens
             else
                 _affichePhraseInvinsible = false;
             Console.WriteLine(_chronoInvincible);
-            if(_chronoInvincible > 5)
+            if(_chronoInvincible > 3)
             {
                 EstInvincible = false;
             }
