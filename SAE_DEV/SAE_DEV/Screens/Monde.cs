@@ -33,7 +33,7 @@ namespace SAE_DEV.Screens
         Random random = new Random();
         
 
-        public const int nbZombie = 50;
+        public const int nbZombie = 120;
         private TiledMapRenderer _tiledMapRenderer;
 
         public static SpriteSheet _spritePerso;
@@ -267,7 +267,7 @@ namespace SAE_DEV.Screens
                     Math.Pow(bullet.Position.Y - zombielvl1[j].PositionZombie.Y, 2)) < 12)
                     {
                         zombielvl1[j].SpawnDuZombie();
-                        zombielvl1[j].VitesseZombie =+ 5;
+                        zombielvl1[j].VitesseZombie =+ 10;
                         
                         bullets.Remove(bullet);
                         score++;
