@@ -280,6 +280,12 @@ namespace SAE_DEV.Screens
                 }
             }
 
+            foreach(Bullet bullet in bullets.ToArray())
+            {
+                if(bullet.BulletCollision())
+                    bullets.Remove(bullet);
+            }
+
 
             // CHRONO POUR L4AFFICHAGE DES COMMANDES
             _chrono = _chrono + 1 * deltaTime;
