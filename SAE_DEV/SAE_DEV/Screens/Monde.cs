@@ -17,6 +17,8 @@ using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Content;
 using System.Diagnostics.Metrics;
 using Transform;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace SAE_DEV.Screens
 {
@@ -59,6 +61,8 @@ namespace SAE_DEV.Screens
 
         private int _screenWidth;
         private int _screenHeight;
+
+        private Song _rhoff;
 
         Random random = new Random();
 
@@ -157,7 +161,9 @@ namespace SAE_DEV.Screens
                 zombielvl1[i].LoadContent(Game);
             }
 
-           
+            _rhoff = Content.Load<Song>("Rohff - La Puissance");
+            MediaPlayer.Play(_rhoff);
+
             base.LoadContent();
         }
 
@@ -338,6 +344,9 @@ namespace SAE_DEV.Screens
             
 
             _spriteBatch.End();
+
+            
+            
 
             Console.WriteLine("Perso x :" + Math.Round(Perso._positionPerso.X) + " y :" + Math.Round(Perso._positionPerso.Y));
         }
