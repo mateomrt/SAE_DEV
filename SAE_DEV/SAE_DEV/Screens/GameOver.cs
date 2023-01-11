@@ -1,16 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MonoGame.Extended.ViewportAdapters;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended;
-using MonoGame.Extended.Serialization;
-using MonoGame.Extended.Content;
 using Microsoft.Xna.Framework;
-using SAE_DEV;
 using MonoGame.Extended.Screens;
 using Microsoft.Xna.Framework.Input;
 
