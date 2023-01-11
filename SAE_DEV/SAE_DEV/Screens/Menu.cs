@@ -53,7 +53,7 @@ namespace SAE_DEV.Screens
             _map1 = Content.Load<Texture2D>("Map1Capture");
             _map2 = Content.Load<Texture2D>("Map2Capture");
             _menu = Content.Load<Song>("Indian");
-            MediaPlayer.Play(_menu);
+            //MediaPlayer.Play(_menu);
 
             base.LoadContent();
         }

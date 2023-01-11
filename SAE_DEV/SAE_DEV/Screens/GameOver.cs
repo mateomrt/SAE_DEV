@@ -3,6 +3,14 @@ using System;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.Screens;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Tiled.Renderers;
+using MonoGame.Extended.Tiled;
+using System.Collections.Generic;
+using MonoGame.Extended.ViewportAdapters;
+using MonoGame.Extended.Sprites;
+using MonoGame.Extended.Serialization;
+using MonoGame.Extended.Content;
+using Microsoft.Xna.Framework.Media;
 
 namespace SAE_DEV.Screens
 {
@@ -20,6 +28,7 @@ namespace SAE_DEV.Screens
 
 
 
+
         private new Game1 Game => (Game1)base.Game;
 
         public GameOver(Game1 game) : base(game)
@@ -32,7 +41,7 @@ namespace SAE_DEV.Screens
             _posGameOver = new Vector2(458, 224);
             _posOuiNon = new Vector2(500, 446);
             _posVoulez = new Vector2(300, 336);
-            
+
             base.Initialize();
         }
         public override void LoadContent()
@@ -69,6 +78,9 @@ namespace SAE_DEV.Screens
             _spriteBatch.Draw(_gameOver, _posGameOver, Color.White);
             _spriteBatch.Draw(_OuiNon, _posOuiNon, Color.White);
             _spriteBatch.Draw(_Voulez, _posVoulez, Color.White);
+            Vector2 textMiddlePoint = Monde._font.MeasureString(Monde._text) / 2;
+            Vector2 position = new Vector2(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height - 40);
+            _spriteBatch.DrawString(Monde._font, Monde._text, position, new Color(159, 2, 2), 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
             _spriteBatch.End();
         }
     }

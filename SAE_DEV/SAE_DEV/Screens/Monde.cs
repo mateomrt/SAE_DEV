@@ -49,9 +49,9 @@ namespace SAE_DEV.Screens
         private SpriteBatch _spriteBatch;
         public static SpriteSheet _spritePerso;
 
-        private SpriteFont _font;
-        private string _text;
-        private int _score;
+        public static SpriteFont _font;
+        public static string _text;
+        public static int _score;
 
         private float _chrono;
         private float _chronoInvincible;
