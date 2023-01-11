@@ -41,7 +41,6 @@ namespace SAE_DEV
         {
             float _timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
             collision = false;
-
             Position += _direction * LinearVelocity;
 
             BulletCollision();
@@ -49,11 +48,10 @@ namespace SAE_DEV
 
         public bool BulletCollision()
         {
+            //COLLISION DES BALLES AVEC LES OBSTACLES
             collision = false;
             ushort tx = (ushort)(Position.X / Monde._tiledMap.TileWidth);
             ushort ty = (ushort)(Position.Y / Monde._tiledMap.TileWidth);
-
-
             if (Collision.IsCollision(tx, ty))
                 collision = true;
 

@@ -44,7 +44,6 @@ namespace SAE_DEV.Screens
             _posmapCapture1 = new Vector2(0, 0);
             _posmapCapture2 = new Vector2(650, 0);
             _isClicked = false;
-
             Game1._choixMap = 0;
 
             base.Initialize();
@@ -58,7 +57,7 @@ namespace SAE_DEV.Screens
             _map1 = Content.Load<Texture2D>("Map1Capture");
             _map2 = Content.Load<Texture2D>("Map2Capture");
             _menu = Content.Load<Song>("Indian");
-            //MediaPlayer.Play(_menu);
+            MediaPlayer.Play(_menu);
 
             base.LoadContent();
         }
@@ -81,8 +80,6 @@ namespace SAE_DEV.Screens
                 Game1._choixMap = 2;
                 Game.LoadMonde();
             }
-            
-
         }
         public override void Draw(GameTime gameTime) 
         {

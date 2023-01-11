@@ -37,8 +37,6 @@ namespace SAE_DEV
         {
             _graphics = new GraphicsDeviceManager(this);
             Window.AllowUserResizing = false;
-
-
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -48,18 +46,30 @@ namespace SAE_DEV
             _graphics.PreferredBackBufferWidth = 1280;  // set this value to the desired width of your window
             _graphics.PreferredBackBufferHeight = 720;   // set this value to the desired height of your window
             _graphics.ApplyChanges();
-
-
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
-
             Window.Title = "Sae Dev";
-
-            
-
             _screenManager = new ScreenManager();
             
 
             base.Initialize();
+        }
+        protected override void Update(GameTime gameTime)
+        {
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
+            _keyboardState = Keyboard.GetState();
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Exit();
+            _screenManager.Update(gameTime);
+
+            base.Update(gameTime);
+        }
+        protected override void Draw(GameTime gameTime)
+        {
+            
+            GraphicsDevice.Clear(Color.Black);
+            _screenManager.Draw(gameTime);
+
+            base.Draw(gameTime);
         }
 
         public void LoadScreen(GameScreen screen)
@@ -67,8 +77,6 @@ namespace SAE_DEV
             _screenManager.LoadScreen(screen, new FadeTransition(GraphicsDevice, Color.Black, .5f));
 
         }
-        
-
         public void LoadMenu()
         {
             LoadScreen(new Menu(this));
@@ -81,41 +89,10 @@ namespace SAE_DEV
         {
             LoadScreen(new GameOver(this));
         }
-
         protected override void LoadContent()
         {
             LoadMenu();
         }
-
-        protected override void Update(GameTime gameTime)
-        {
-            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
-            _keyboardState = Keyboard.GetState();
-
-
-
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            
-            
-            _screenManager.Update(gameTime);
-
-            
-
-            base.Update(gameTime);
-        }
-
-        protected override void Draw(GameTime gameTime)
-        {
-            
-            GraphicsDevice.Clear(Color.Black);
-
-            _screenManager.Draw(gameTime);
-
-            base.Draw(gameTime);
-        }
-
 
     }
 }

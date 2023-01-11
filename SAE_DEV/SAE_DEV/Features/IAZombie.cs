@@ -42,7 +42,7 @@ namespace SAE_DEV
                 Random rand = new Random();
                 speed = rand.Next(40,65);
                 _direction = Perso._positionPerso - zombie.PositionZombie;
-                // Deplacement et collision vers la droite
+                // Deplacement vers le perso et collision vers la droite
                 if (_direction.X > 0)
                 {
                     _direction.X += 1;
@@ -53,7 +53,7 @@ namespace SAE_DEV
                         _direction.X = 0;
                     }
                 }
-                // Deplacement et collision vers le haut 
+                // Deplacement vers le perso et collision vers le haut 
                 if (_direction.Y < 0)
                 {
                     _direction.Y -= 1;
@@ -65,7 +65,7 @@ namespace SAE_DEV
                     }
 
                 }
-                // Deplacement et collision vers le bas
+                // Deplacement vers le perso et collision vers le bas
                 if (_direction.Y > 0)
                 {
                     _direction.Y += 1;
@@ -77,7 +77,7 @@ namespace SAE_DEV
                     }
 
                 }
-                // Deplacement et collision vers la gauche
+                // Deplacement vers le perso et collision vers la gauche
                 if (_direction.X < 0)
                 {
                     _direction.X -= 1;
