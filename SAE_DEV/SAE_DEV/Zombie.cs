@@ -98,11 +98,36 @@ namespace SAE_DEV
             _spriteZombie = new AnimatedSprite(spritezombie);
         }
 
+        public void SpawnDuZombie()
+        {
+            bool posvalide = false;
+            do
+            {
+                Random random = new Random();
+                this.PositionZombie = new Vector2(random.Next(150, 800), random.Next(200, 700));
+                posvalide = true;
+                ushort tx = (ushort)(this.PositionZombie.X / Monde._tiledMap.TileWidth);
+                ushort ty = (ushort)(this.PositionZombie.Y / Monde._tiledMap.TileWidth);
+                if (Collision.IsCollision(tx, ty))
+                {
+                    posvalide = false;
+                }
+                if (Math.Sqrt(
+                    Math.Pow(Perso._positionPerso.X - this.PositionZombie.X, 2) +
+                    Math.Pow(Perso._positionPerso.Y - this.PositionZombie.Y, 2)) < 200)
+                {
+                    posvalide = false;
+                }
+            } while (!posvalide);
+
+        }
+        
         public void Update(float deltaTime)
         {
             _spriteZombie.Play("idle");
             _spriteZombie.Update(deltaTime);
         }
+        
         public void Draw(SpriteBatch _spriteBatch)
         {
             
