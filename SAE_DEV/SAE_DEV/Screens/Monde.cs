@@ -208,13 +208,13 @@ namespace SAE_DEV.Screens
                 }
             }
 
-            for(int i = 0; i < bullets.Count; i++)
+            foreach (Bullet bullet in bullets.ToArray()) 
             {
                 for(int j = 0; j < zombielvl1.Length; j++)
                 {
                     if(Math.Sqrt(
-                    Math.Pow(bullets[i].Position.X - zombielvl1[j].PositionZombie.X, 2) +
-                    Math.Pow(bullets[i].Position.Y - zombielvl1[j].PositionZombie.Y, 2)) < 20)
+                    Math.Pow(bullet.Position.X - zombielvl1[j].PositionZombie.X, 2) +
+                    Math.Pow(bullet.Position.Y - zombielvl1[j].PositionZombie.Y, 2)) < 12)
                     {
                         
                         
@@ -236,6 +236,9 @@ namespace SAE_DEV.Screens
                                 zombielvl1[j].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
                             } while (zombielvl1[j].PositionZombie.X > 1036 && zombielvl1[j].PositionZombie.X < 244 && zombielvl1[j].PositionZombie.Y > 556 && zombielvl1[j].PositionZombie.Y < 138);
                         }
+
+                        bullets.Remove(bullet);
+                        
                     }
                 }
             }
