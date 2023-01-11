@@ -54,6 +54,7 @@ namespace SAE_DEV.Screens
         
         
         private float _chrono;
+        private float _chronoInvincible;
         private bool _affiche;
 
 
@@ -61,6 +62,7 @@ namespace SAE_DEV.Screens
         private int _screenHeight;
 
         Random random = new Random();
+        private bool EstInvincible;
 
 
 
@@ -215,20 +217,29 @@ namespace SAE_DEV.Screens
             {
                 Game.LoadMenu();
             }
-
+            
             for(int i = 0; i < zombielvl1.Length; i++)
             {
                 if (Math.Sqrt(
                     Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + 
-                    Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 1)
+                    Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10 && EstInvincible == false)
                 {
 
                     Perso.vie -= 1;
-                    Perso._positionPerso = new Vector2(150,250);
-                    
+                    EstInvincible = true;
+                    _chronoInvincible = 0 + 1 * deltaTime;
+                    //Perso._positionPerso = new Vector2(150,250);
+
                 }
             }
+            
 
+            if(_chronoInvincible > 5)
+            {
+                EstInvincible = false;
+            }
+            
+            
             foreach (Bullet bullet in bullets.ToArray()) 
             {
                 for(int j = 0; j < zombielvl1.Length; j++)
