@@ -223,8 +223,8 @@ namespace SAE_DEV.Screens
             {
                 Game.LoadMenu();
             }
-            
-            for(int i = 0; i < zombielvl1.Length; i++)
+            _chronoInvincible += 1 * deltaTime;
+            for (int i = 0; i < zombielvl1.Length; i++)
             {
                 if (Math.Sqrt(
                     Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + 
@@ -233,17 +233,17 @@ namespace SAE_DEV.Screens
 
                     Perso.vie -= 1;
                     EstInvincible = true;
-                    _chronoInvincible = 0 + 1 * deltaTime;
+                    _chronoInvincible = 0;
                     //Perso._positionPerso = new Vector2(150,250);
 
                 }
             }
-            
-
+            Console.WriteLine(_chronoInvincible);
             if(_chronoInvincible > 5)
             {
                 EstInvincible = false;
             }
+
             
             
             foreach (Bullet bullet in bullets.ToArray()) 
@@ -343,7 +343,6 @@ namespace SAE_DEV.Screens
             
             
 
-            Console.WriteLine("Perso x :" + Math.Round(Perso._positionPerso.X) + " y :" + Math.Round(Perso._positionPerso.Y));
         }
 
         private void CreateBullet()
