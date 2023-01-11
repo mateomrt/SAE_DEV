@@ -4,22 +4,13 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Tiled.Renderers;
 using MonoGame.Extended.Tiled;
-using SAE_DEV;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MonoGame.Extended.ViewportAdapters;
 using MonoGame.Extended.Sprites;
-using MonoGame.Extended;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Content;
-using System.Diagnostics.Metrics;
-using Transform;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SAE_DEV.Screens
 {
@@ -54,16 +45,16 @@ namespace SAE_DEV.Screens
         public Texture2D _texturePhraseInvincible;
         private SpriteBatch _spriteBatch;
 
-        private SpriteFont font;
-        private string text;
-        private int score;
+        private SpriteFont _font;
+        private string _text;
+        private int _score;
 
         private float _chrono;
         private float _chronoInvincible;
         private bool _affiche;
 
         private bool _affichePhraseInvinsible;
-        private bool EstInvincible;
+        private bool _EstInvincible;
 
         private int _screenWidth;
         private int _screenHeight;
@@ -99,8 +90,8 @@ namespace SAE_DEV.Screens
             }
             
             //Initialisation du score
-            score = 0;
-            text = "Score : " + score.ToString();
+            _score = 0;
+            _text = "Score : " + _score.ToString();
            
 
             // INITIALISATION DE LA CAMÉRA
@@ -152,7 +143,7 @@ namespace SAE_DEV.Screens
             Perso.LoadContent(_spritePerso);
 
             // CHARGEMENT DE LA FONT
-            font = Content.Load<SpriteFont>("nosifer");
+            _font = Content.Load<SpriteFont>("nosifer");
 
             //Load des zombie et de leur spawn
             for (int i = 0; i < zombielvl1.Length; i++)
@@ -175,7 +166,7 @@ namespace SAE_DEV.Screens
         public override void Update(GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            float walkSpeed = deltaTime * Perso.vitesse_mvt;
+            float walkSpeed = deltaTime * Perso._vitesse_mvt;
 
             
             //Update du perso
@@ -229,19 +220,19 @@ namespace SAE_DEV.Screens
             {
                 if (Math.Sqrt(
                     Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + 
-                    Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10 && EstInvincible == false)
+                    Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10 && _EstInvincible == false)
                 {
-                    Perso.vie -= 1;
-                    EstInvincible = true;
+                    Perso._vie -= 1;
+                    _EstInvincible = true;
                     _chronoInvincible = 0;
                     MediaPlayer.Play(_death);
-                    if (Perso.vie == 0)
+                    if (Perso._vie == 0)
                     {
                         Game.LoadGameOver();
                     }
                 }
             }
-            if (EstInvincible == true)
+            if (_EstInvincible == true)
             {
                 _affichePhraseInvinsible = true;
             }
@@ -250,7 +241,7 @@ namespace SAE_DEV.Screens
             Console.WriteLine(_chronoInvincible);
             if(_chronoInvincible > 2)
             {
-                EstInvincible = false;
+                _EstInvincible = false;
             }
 
             
@@ -270,8 +261,8 @@ namespace SAE_DEV.Screens
                         zombielvl1[j].VitesseZombie =+ 5;
                         
                         bullets.Remove(bullet);
-                        score++;
-                        text = "Score :" + score.ToString();
+                        _score++;
+                        _text = "Score :" + _score.ToString();
                     }
                 }
             }
@@ -319,13 +310,13 @@ namespace SAE_DEV.Screens
             // AFFICHAGE DE LA VIE
             Vector2 _postionCoeur = new Vector2(10,40);
 
-            for (int i = 0; i < Perso.vie; i++)
+            for (int i = 0; i < Perso._vie; i++)
             {
                 _spriteBatch.Draw(_textureCoeurPlein, new Vector2(_postionCoeur.X + 40 + (80 * i), _postionCoeur.Y), Color.White);
             }
-            for (int i = 0; i < 5 - Perso.vie; i++)
+            for (int i = 0; i < 5 - Perso._vie; i++)
             {
-                _spriteBatch.Draw(_textureCoeurVide, new Vector2(_postionCoeur.X + 40 + (80 * Perso.vie) + 80 * i, _postionCoeur.Y), Color.White);
+                _spriteBatch.Draw(_textureCoeurVide, new Vector2(_postionCoeur.X + 40 + (80 * Perso._vie) + 80 * i, _postionCoeur.Y), Color.White);
             }
 
             //AFFICHAGE DES COMMANDES
@@ -343,9 +334,9 @@ namespace SAE_DEV.Screens
             }
 
             // AFFICHAGE DU SCORE
-            Vector2 textMiddlePoint = font.MeasureString(text) / 2;
+            Vector2 textMiddlePoint = _font.MeasureString(_text) / 2;
             Vector2 position = new Vector2(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height - 40);
-            _spriteBatch.DrawString(font, text, position, new Color(159,2,2), 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
+            _spriteBatch.DrawString(_font, _text, position, new Color(159,2,2), 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
             _spriteBatch.End();
 
             

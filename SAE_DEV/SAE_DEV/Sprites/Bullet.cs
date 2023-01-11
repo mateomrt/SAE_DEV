@@ -18,15 +18,15 @@ namespace SAE_DEV
         private Vector2 _direction;
 
 
-        private Texture2D sprite;
+        private Texture2D _sprite;
 
-        public bool collision;
+        public bool _collision;
 
         public Bullet(Vector2 position, Vector2 direction, Texture2D bulletSprite)
         {
             this.Position = position;
             this._direction = direction;
-            this.sprite = bulletSprite;
+            this._sprite = bulletSprite;
         }
 
         public Vector2 Position { get => _position; set => _position = value; }
@@ -34,13 +34,13 @@ namespace SAE_DEV
         public void Draw(SpriteBatch spriteBatch)
         {
             // Just draw the texture we have at the rectangle x and y.
-            spriteBatch.Draw(sprite, Position, Color.White);
+            spriteBatch.Draw(_sprite, Position, Color.White);
         }
 
         public void Update(GameTime gameTime)
         {
             float _timer = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            collision = false;
+            _collision = false;
             Position += _direction * LinearVelocity;
 
             BulletCollision();
@@ -49,13 +49,13 @@ namespace SAE_DEV
         public bool BulletCollision()
         {
             //COLLISION DES BALLES AVEC LES OBSTACLES
-            collision = false;
+            _collision = false;
             ushort tx = (ushort)(Position.X / Monde._tiledMap.TileWidth);
             ushort ty = (ushort)(Position.Y / Monde._tiledMap.TileWidth);
             if (Collision.IsCollision(tx, ty))
-                collision = true;
+                _collision = true;
 
-            return collision;
+            return _collision;
         }
 
     }

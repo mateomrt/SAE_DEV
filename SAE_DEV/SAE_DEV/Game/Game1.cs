@@ -1,18 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended.Tiled;
-using MonoGame.Extended.Tiled.Renderers;
-using MonoGame.Extended.Content;
-using MonoGame.Extended.Serialization;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.ViewportAdapters;
-using System;
-using MonoGame.Extended;
-
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
-using System.Xml.Linq;
 using SAE_DEV.Screens;
 
 namespace SAE_DEV
@@ -22,7 +12,6 @@ namespace SAE_DEV
         public static int MAP1_TAILLE = 800;
         public static int MAP2_TAILLE = 560;
         public float deltaTime;
-        private KeyboardState _keyboardState;
         private GraphicsDeviceManager _graphics;
         public static int _screenWidth = 1280;
         public static int _screenHeight = 720;
@@ -56,9 +45,10 @@ namespace SAE_DEV
         protected override void Update(GameTime gameTime)
         {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
-            _keyboardState = Keyboard.GetState();
+            
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            
             _screenManager.Update(gameTime);
 
             base.Update(gameTime);

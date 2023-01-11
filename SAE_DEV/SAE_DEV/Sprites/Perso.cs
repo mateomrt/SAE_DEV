@@ -20,16 +20,16 @@ namespace SAE_DEV
         public static AnimatedSprite _spritePerso;
         public static string _animationPerso;
         public static Vector2 _positionPerso;
-        public static float vitesse_mvt;
-        public static int vie;
+        public static float _vitesse_mvt;
+        public static int _vie;
 
 
         public static void Initialize()
         {
-            //Initialisation de la position et de la vitesse du personnage
+            //Initialisation de la position et de la vitesse du personnage et de sa vie
             _positionPerso = new Vector2(150, 250);
-            vitesse_mvt = 100 ;
-            vie = 5;
+            _vitesse_mvt = 100 ;
+            _vie = 5;
         }
         public static void LoadContent(SpriteSheet spriteSheet)
         {
