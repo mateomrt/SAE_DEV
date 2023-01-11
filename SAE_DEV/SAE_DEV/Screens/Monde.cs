@@ -24,7 +24,7 @@ namespace SAE_DEV.Screens
         Random random = new Random();
         
 
-        public const int nbZombie = 50;
+        public const int nbZombie = 120;
         private TiledMapRenderer _tiledMapRenderer;
 
         public static SpriteSheet _spritePerso;
@@ -258,7 +258,7 @@ namespace SAE_DEV.Screens
                     Math.Pow(bullet.Position.Y - zombielvl1[j].PositionZombie.Y, 2)) < 12)
                     {
                         zombielvl1[j].SpawnDuZombie();
-                        zombielvl1[j].VitesseZombie =+ 5;
+                        zombielvl1[j].VitesseZombie =+ 10;
                         
                         bullets.Remove(bullet);
                         _score++;
@@ -330,7 +330,7 @@ namespace SAE_DEV.Screens
 
             if (_affichePhraseInvinsible == true)
             {
-                _spriteBatch.Draw(_texturePhraseInvincible, new Vector2(100, 400), Color.White);
+                _spriteBatch.Draw(_texturePhraseInvincible, new Vector2(100, 100), Color.White);
             }
 
             // AFFICHAGE DU SCORE
