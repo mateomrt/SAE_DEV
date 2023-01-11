@@ -216,6 +216,11 @@ namespace SAE_DEV.Screens
                     Math.Pow(bullets[i].Position.X - zombielvl1[j].PositionZombie.X, 2) +
                     Math.Pow(bullets[i].Position.Y - zombielvl1[j].PositionZombie.Y, 2)) < 20)
                     {
+                        
+                        
+                        
+                        
+                        
                         if (Game1._choixMap == 1)
                         {
                             do
