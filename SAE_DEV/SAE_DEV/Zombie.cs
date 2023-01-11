@@ -104,7 +104,15 @@ namespace SAE_DEV
             do
             {
                 Random random = new Random();
-                this.PositionZombie = new Vector2(random.Next(150, 800), random.Next(200, 700));
+                if(Game1._choixMap == 1)
+                {
+                    this.PositionZombie = new Vector2(random.Next(150, 800), random.Next(200, 700));
+                }
+                else
+                {
+                    this.PositionZombie = new Vector2(random.Next(0, 450), random.Next(100, 500));
+                }
+                
                 posvalide = true;
                 ushort tx = (ushort)(this.PositionZombie.X / Monde._tiledMap.TileWidth);
                 ushort ty = (ushort)(this.PositionZombie.Y / Monde._tiledMap.TileWidth);

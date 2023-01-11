@@ -68,6 +68,7 @@ namespace SAE_DEV.Screens
         private int _screenHeight;
 
         private Song _rhoff;
+        private Song _ball;
 
         Random random = new Random();
         private bool EstInvincible;
@@ -176,6 +177,8 @@ namespace SAE_DEV.Screens
                 zombielvl1[i].SpawnDuZombie();
             }
 
+            _ball = Content.Load<Song>("bruitBalle");
+
             _rhoff = Content.Load<Song>("Rohff - La Puissance");
             MediaPlayer.Play(_rhoff);
 
@@ -201,10 +204,14 @@ namespace SAE_DEV.Screens
             currentState = Mouse.GetState();
             if (currentState.LeftButton == ButtonState.Pressed &&
                 previousState.LeftButton == ButtonState.Released)
+            {
                 CreateBullet();
+                MediaPlayer.Play(_ball);
+            }
             foreach (Bullet bullet in bullets)
             {
                 bullet.Update(gameTime);
+                
             }
 
             //On joue ici l'animation du perso
@@ -245,7 +252,7 @@ namespace SAE_DEV.Screens
                     Perso.vie -= 1;
                     EstInvincible = true;
                     _chronoInvincible = 0;
-                    //Perso._positionPerso = new Vector2(150,250);
+                    
 
                 }
             }
@@ -273,7 +280,7 @@ namespace SAE_DEV.Screens
                     {
 
                         zombielvl1[j].SpawnDuZombie();
-
+                        
                         bullets.Remove(bullet);
                         
                     }
