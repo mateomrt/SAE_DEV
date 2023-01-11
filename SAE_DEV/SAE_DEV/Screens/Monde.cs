@@ -26,38 +26,32 @@ namespace SAE_DEV.Screens
     internal class Monde : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
+        //Tableau de zombie et de IA et des balles
         Zombie[] zombielvl1;
         IAZombie[] iazombie;
-        public Vector2 positionGameOver;
+        List<Bullet> bullets = new List<Bullet>();
+        Random random = new Random();
+        
 
-        public static int MAP1_TAILLE = 800;
-        public static int MAP2_TAILLE = 560;
         public const int nbZombie = 50;
-        public static TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
 
         public static SpriteSheet _spritePerso;
 
-
-        List<Bullet> bullets = new List<Bullet>();
-        public Texture2D _spriteBullet;
         public MouseState previousState;
         public MouseState currentState;
 
-        public static Matrix transformMatrix;
+        public Matrix transformMatrix;
 
+        public static TiledMap _tiledMap;
+        public Texture2D _spriteBullet;
         public Texture2D _textureCoeurVide;
         public Texture2D _textureCoeurPlein;
-        
         public Texture2D _textureZQSD;
         public Texture2D _textureFlecheDirectionnelle;
         public Texture2D _textureCliqueGauche;
         public Texture2D _texturePhraseFonction;
         public Texture2D _texturePhraseInvincible;
-
-
-        private bool _affichePhraseInvinsible;
-
         private SpriteBatch _spriteBatch;
 
         private SpriteFont font;
@@ -68,17 +62,15 @@ namespace SAE_DEV.Screens
         private float _chronoInvincible;
         private bool _affiche;
 
+        private bool _affichePhraseInvinsible;
+        private bool EstInvincible;
 
         private int _screenWidth;
         private int _screenHeight;
 
         private Song _rhoff;
-
-        Random random = new Random();
-        private bool EstInvincible;
-
-
-
+        private Song _ball;
+        private Song _death;
 
         public Monde(Game1 game) : base(game)
         {
@@ -88,50 +80,36 @@ namespace SAE_DEV.Screens
 
         public override void Initialize()
         {
-
+            //Initialisation des zombie, du perso et de l'IA des zombie
             zombielvl1 = new Zombie[nbZombie];
             iazombie = new IAZombie[nbZombie];
-            
-            score = 0;
-            text = "Score : " + score.ToString();
-
+            Perso.Initialize();
             for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i] = new Zombie();
-
                 if (Game1._choixMap == 1)
                 {
-                    
-                    
                     zombielvl1[i].PositionZombie = new Vector2(random.Next(518, 1078), random.Next(354, 598));
-                    
-                    
                 }
                 if (Game1._choixMap == 2)
                 {
-                    
                     zombielvl1[i].PositionZombie = new Vector2(random.Next(244, 1036), random.Next(138, 556));
-                    
-                    
                 }
-                
-
-                
-
-
                 iazombie[i] = new IAZombie(random.Next(40, 60), zombielvl1[i]);
-
             }
+            
+            //Initialisation du score
+            score = 0;
+            text = "Score : " + score.ToString();
+           
+
+            // INITIALISATION DE LA CAMÉRA
             _screenWidth = 1280;
             _screenHeight = 720;
-
-            Perso.Initialize();
-            positionGameOver = new Vector2(_screenWidth, _screenHeight);
-            // INITIALISATION DE LA CAMÉRA
             var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, _screenWidth, _screenHeight);
             Camera.Initialise(viewportAdapter);
 
-
+            //Initialisation des chrono
             _chrono = 0;
             _affiche = true;
             _affichePhraseInvinsible = false;
@@ -142,6 +120,7 @@ namespace SAE_DEV.Screens
 
         public override void LoadContent()
         {
+            //Load des map
             if (Game1._choixMap == 1)
             {
                 _tiledMap = Content.Load<TiledMap>("map1");
@@ -150,24 +129,22 @@ namespace SAE_DEV.Screens
             {
                 _tiledMap = Content.Load<TiledMap>("map2");
             }
+            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+
+            //Load des coeur
             _textureCoeurPlein = Content.Load<Texture2D>("coeurPlein");
             _textureCoeurVide = Content.Load<Texture2D>("coeurVide");
             
             
+            //Load des touche, de la phrase invincible
             _textureCliqueGauche = Content.Load<Texture2D>("cliqueGauche");
             _textureFlecheDirectionnelle = Content.Load<Texture2D>("flecheDirectionnelle");
             _textureZQSD = Content.Load<Texture2D>("zqsd");
             _texturePhraseFonction = Content.Load<Texture2D>("phraseFonction");
-
-
-
             _texturePhraseInvincible = Content.Load<Texture2D>("phraseInvincible");
 
-
-            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
-
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //Chargement texture Perso
             _spritePerso = Content.Load<SpriteSheet>("elf_spritesheet.sf", new JsonContentLoader());
@@ -177,12 +154,16 @@ namespace SAE_DEV.Screens
             // CHARGEMENT DE LA FONT
             font = Content.Load<SpriteFont>("nosifer");
 
+            //Load des zombie et de leur spawn
             for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i].LoadContent(Game);
                 zombielvl1[i].SpawnDuZombie();
             }
 
+            //Load des sons
+            _ball = Content.Load<Song>("bruitBalle");
+            _death = Content.Load<Song>("scream");
             _rhoff = Content.Load<Song>("Rohff - La Puissance");
             MediaPlayer.Play(_rhoff);
 
@@ -197,28 +178,28 @@ namespace SAE_DEV.Screens
             float walkSpeed = deltaTime * Perso.vitesse_mvt;
 
             
-
+            //Update du perso
             Perso.Update();
-
-            //On vérifie si une touche est pressée DANS cette classe
             Touche.Presse(Perso._positionPerso, _tiledMap, Perso._animationPerso, walkSpeed, deltaTime);
+            Perso._spritePerso.Play(Perso._animationPerso);
+            Perso._spritePerso.Update(deltaTime);
 
-            // Creation des balles et mise à jour
+
+
+            // Creation des balles et mise à jour collisison
             previousState = currentState;
             currentState = Mouse.GetState();
             if (currentState.LeftButton == ButtonState.Pressed &&
                 previousState.LeftButton == ButtonState.Released)
+            {
                 CreateBullet();
+                MediaPlayer.Play(_ball);
+            }
             foreach (Bullet bullet in bullets)
             {
                 bullet.Update(gameTime);
             }
-
-            //On joue ici l'animation du perso
-            Perso._spritePerso.Play(Perso._animationPerso);
-            //Si on ne se déplace plus on fait l'animation "idle"
-            Perso._spritePerso.Update(deltaTime);
-
+            
 
             // UPDATE DE LA POSITION CAMERA
             Camera.Update();
@@ -228,6 +209,7 @@ namespace SAE_DEV.Screens
             _tiledMapRenderer.Update(gameTime);
 
 
+            //Update du zombie
             for (int i = 0; i < zombielvl1.Length; i++)
             {
                 iazombie[i].Update(gameTime);
@@ -235,12 +217,13 @@ namespace SAE_DEV.Screens
             }
 
 
-            //Touche Y pour retourner au menu du jeu
-           
             if (Keyboard.GetState().IsKeyDown(Keys.Y))
             {
                 Game.LoadMenu();
             }
+
+
+            //Collision du perso avec le zombie et chrono de l'invincibilité         
             _chronoInvincible += 1 * deltaTime;
             for (int i = 0; i < zombielvl1.Length; i++)
             {
@@ -248,11 +231,14 @@ namespace SAE_DEV.Screens
                     Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + 
                     Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10 && EstInvincible == false)
                 {
-
                     Perso.vie -= 1;
                     EstInvincible = true;
                     _chronoInvincible = 0;
-
+                    MediaPlayer.Play(_death);
+                    if (Perso.vie == 0)
+                    {
+                        Game.LoadGameOver();
+                    }
                 }
             }
             if (EstInvincible == true)
@@ -262,34 +248,32 @@ namespace SAE_DEV.Screens
             else
                 _affichePhraseInvinsible = false;
             Console.WriteLine(_chronoInvincible);
-            if(_chronoInvincible > 3)
+            if(_chronoInvincible > 2)
             {
                 EstInvincible = false;
             }
 
             
-            
+
+            //Collision bullet avec le zombie et avec les mur
             foreach (Bullet bullet in bullets.ToArray()) 
             {
-                for(int j = 0; j < zombielvl1.Length; j++)
+                if (bullet.BulletCollision())
+                    bullets.Remove(bullet);
+                for (int j = 0; j < zombielvl1.Length; j++)
                 {
                     if(Math.Sqrt(
                     Math.Pow(bullet.Position.X - zombielvl1[j].PositionZombie.X, 2) +
                     Math.Pow(bullet.Position.Y - zombielvl1[j].PositionZombie.Y, 2)) < 12)
                     {
-
                         zombielvl1[j].SpawnDuZombie();
+                        zombielvl1[j].VitesseZombie =+ 5;
+                        
                         bullets.Remove(bullet);
                         score++;
                         text = "Score :" + score.ToString();
                     }
                 }
-            }
-
-            foreach(Bullet bullet in bullets.ToArray())
-            {
-                if(bullet.BulletCollision())
-                    bullets.Remove(bullet);
             }
 
 
@@ -302,13 +286,6 @@ namespace SAE_DEV.Screens
             else
                 _affiche = true;
 
-
-
-
-            if (Perso.vie == 0)
-            {
-                Game.LoadGameOver();
-            }
         }
         public override void Draw(GameTime gameTime)
         {
@@ -321,30 +298,24 @@ namespace SAE_DEV.Screens
             //On dessine notre Perso
             Perso.Draw(_spriteBatch);
 
+            //On dessine les zombie
             for (int i = 0; i < zombielvl1.Length; i++)
             {
                 zombielvl1[i].Draw(_spriteBatch);
             }
 
+            //On dessine les balles
             foreach (Bullet bullet in bullets)
             {
                 bullet.Draw(_spriteBatch);
             }
-
-            
-
-            
             
             //On dessine la map avec la "vue" de la caméra
             _tiledMapRenderer.Draw(transformMatrix);
-
-            
-
-
             _spriteBatch.End();
 
-            _spriteBatch.Begin();
 
+            _spriteBatch.Begin();
             // AFFICHAGE DE LA VIE
             Vector2 _postionCoeur = new Vector2(10,40);
 
@@ -375,8 +346,6 @@ namespace SAE_DEV.Screens
             Vector2 textMiddlePoint = font.MeasureString(text) / 2;
             Vector2 position = new Vector2(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height - 40);
             _spriteBatch.DrawString(font, text, position, new Color(159,2,2), 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
-
-
             _spriteBatch.End();
 
             

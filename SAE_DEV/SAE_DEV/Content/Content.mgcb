@@ -18,6 +18,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Augh.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Augh.mp3
+
+#begin bruitBalle.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:bruitBalle.mp3
+
 #begin Bullet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -101,6 +113,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:GameOver.png
+
+#begin Indian.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Indian.mp3
 
 #begin map1.tmx
 /importer:TiledMapImporter
@@ -232,6 +250,12 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Rohff - La Puissance.mp3
+
+#begin scream.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:scream.mp3
 
 #begin tilemap_packed.png
 /importer:TextureImporter
