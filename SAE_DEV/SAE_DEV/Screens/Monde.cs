@@ -339,7 +339,7 @@ namespace SAE_DEV.Screens
 
             if (_affichePhraseInvinsible == true)
             {
-                _spriteBatch.Draw(_texturePhraseInvincible, new Vector2(100, 400), Color.White);
+                _spriteBatch.Draw(_texturePhraseInvincible, new Vector2(100, 100), Color.White);
             }
 
             // AFFICHAGE DU SCORE
