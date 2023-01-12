@@ -46,9 +46,6 @@ namespace SAE_DEV
         {
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
             
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-            
             _screenManager.Update(gameTime);
 
             base.Update(gameTime);

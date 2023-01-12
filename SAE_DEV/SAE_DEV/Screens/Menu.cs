@@ -78,6 +78,10 @@ namespace SAE_DEV.Screens
                 Game.LoadMonde();
                 MediaPlayer.Stop();
             }
+
+            // Dans le menu si on presse Échap on quitte le jeu
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Game.Exit();
         }
         public override void Draw(GameTime gameTime) 
         {

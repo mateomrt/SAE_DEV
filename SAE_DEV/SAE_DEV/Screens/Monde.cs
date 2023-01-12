@@ -229,13 +229,6 @@ namespace SAE_DEV.Screens
             }
 
 
-            //Retour au menu avec Y
-            if (Keyboard.GetState().IsKeyDown(Keys.Y))
-            {
-                Game.LoadMenu();
-            }
-
-
             //Collision du perso avec le zombie et chrono de l'invincibilité         
             _chronoInvincible += 1 * deltaTime;
 
@@ -298,6 +291,10 @@ namespace SAE_DEV.Screens
             }
             else
                 _affiche = true;
+
+            // Dans le jeu si on presse Échap on reviens au menu
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Game.LoadMenu();
 
         }
         public override void Draw(GameTime gameTime)
