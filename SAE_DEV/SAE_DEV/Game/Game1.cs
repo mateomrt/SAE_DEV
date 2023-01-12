@@ -9,12 +9,12 @@ namespace SAE_DEV
 {
     public class Game1 : Game
     {
-        public static int MAP1_TAILLE = 800;
-        public static int MAP2_TAILLE = 560;
-        public float deltaTime;
+        public const int MAP1_TAILLE = 800;
+        public const int MAP2_TAILLE = 560;
+        private float _deltaTime;
         private GraphicsDeviceManager _graphics;
-        public static int _screenWidth = 1280;
-        public static int _screenHeight = 720;
+        public const int SCREEN_WIDTH = 1280;
+        public const int SCREEN_HEIGHT = 720;
         public static int _choixMap;
         public SpriteBatch SpriteBatch { get; private set; }
 
@@ -32,8 +32,8 @@ namespace SAE_DEV
             
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = 1280;  // set this value to the desired width of your window
-            _graphics.PreferredBackBufferHeight = 720;   // set this value to the desired height of your window
+            _graphics.PreferredBackBufferWidth = SCREEN_WIDTH;  // set this value to the desired width of your window
+            _graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;   // set this value to the desired height of your window
             _graphics.ApplyChanges();
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             Window.Title = "Undead Uprising: Last Stand";
@@ -44,7 +44,7 @@ namespace SAE_DEV
         }
         protected override void Update(GameTime gameTime)
         {
-            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
+            _deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // TIME
             
             _screenManager.Update(gameTime);
 
