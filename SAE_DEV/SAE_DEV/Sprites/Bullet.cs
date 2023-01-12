@@ -10,10 +10,7 @@ namespace SAE_DEV
 
         private Vector2 _position;
         private Vector2 _direction;
-
-
         private Texture2D _sprite;
-
         public bool _collision;
 
         public Bullet(Vector2 position, Vector2 direction, Texture2D bulletSprite)

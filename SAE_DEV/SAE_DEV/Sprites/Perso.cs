@@ -13,6 +13,7 @@ namespace SAE_DEV
         public static int _vie;
 
 
+
         public static void Initialize()
         {
             //Initialisation de la position et de la vitesse du personnage et de sa vie
