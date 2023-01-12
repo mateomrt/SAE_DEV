@@ -29,24 +29,22 @@ namespace SAE_DEV.Screens
         
         private int nbZombie;
         
-
-
-        public MouseState previousState;
-        public MouseState currentState;
+        private MouseState previousState;
+        private MouseState currentState;
 
         public Matrix transformMatrix; // Pour la caméra
 
         // On déclare toute les textures
         private TiledMapRenderer _tiledMapRenderer;
         public static TiledMap _tiledMap;
-        public Texture2D _spriteBullet;
-        public Texture2D _textureCoeurVide;
-        public Texture2D _textureCoeurPlein;
-        public Texture2D _textureZQSD;
-        public Texture2D _textureFlecheDirectionnelle;
-        public Texture2D _textureCliqueGauche;
-        public Texture2D _texturePhraseFonction;
-        public Texture2D _texturePhraseInvincible;
+        private Texture2D _spriteBullet;
+        private Texture2D _textureCoeurVide;
+        private Texture2D _textureCoeurPlein;
+        private Texture2D _textureZQSD;
+        private Texture2D _textureFlecheDirectionnelle;
+        private Texture2D _textureCliqueGauche;
+        private Texture2D _texturePhraseFonction;
+        private Texture2D _texturePhraseInvincible;
         private SpriteBatch _spriteBatch;
         public static SpriteSheet _spritePerso;
 
