@@ -45,7 +45,6 @@ namespace SAE_DEV.Screens
         }
         public override void Update(GameTime gameTime)
         {
-            Console.WriteLine(" x : " + Mouse.GetState().X + " y : " + Mouse.GetState().Y);
             _isClicked = false;
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
