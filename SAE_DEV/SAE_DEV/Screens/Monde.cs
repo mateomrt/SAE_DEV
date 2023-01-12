@@ -248,7 +248,7 @@ namespace SAE_DEV.Screens
                     }
                 }
             }
-            if (_EstInvincible == true)
+            if(_EstInvincible == true)
             {
                 _affichePhraseInvinsible = true;
             }
@@ -363,8 +363,8 @@ namespace SAE_DEV.Screens
 
         private void CreateBullet()
         {
-            Vector2 test = ScreenToWorldSpace(Mouse.GetState().Position.ToVector2(), transformMatrix);
-            bullets.Add(new Bullet(Perso._positionPerso, Vector2.Normalize(test - Perso._positionPerso), _spriteBullet));
+            Vector2 _positionSouris = ScreenToWorldSpace(Mouse.GetState().Position.ToVector2(), transformMatrix);
+            bullets.Add(new Bullet(Perso._positionPerso, Vector2.Normalize(_positionSouris - Perso._positionPerso), _spriteBullet));
         }
         
         public Vector2 ScreenToWorldSpace(in Vector2 point, Matrix transformMatrix)
