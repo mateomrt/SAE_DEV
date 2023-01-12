@@ -3,6 +3,7 @@ using System;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.Screens;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace SAE_DEV.Screens
 {
@@ -18,6 +19,8 @@ namespace SAE_DEV.Screens
         private Vector2 _positionClique;
         private bool _isClicked;
 
+        private Song _gameOverSong;
+            
 
 
         private new Game1 Game => (Game1)base.Game;

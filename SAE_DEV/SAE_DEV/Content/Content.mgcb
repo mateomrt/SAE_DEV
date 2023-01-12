@@ -114,12 +114,6 @@
 /processorParam:TextureFormat=Color
 /build:GameOver.png
 
-#begin Indian.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Indian.mp3
-
 #begin map1.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
@@ -153,6 +147,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Map2Capture.png
+
+#begin musiqueIntro.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:musiqueIntro.mp3
 
 #begin nosifer.spritefont
 /importer:FontDescriptionImporter

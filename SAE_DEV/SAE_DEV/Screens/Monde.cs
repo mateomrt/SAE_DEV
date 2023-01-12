@@ -26,7 +26,8 @@ namespace SAE_DEV.Screens
         Random random = new Random();
         
         
-        public const int nbZombie = 120;
+        
+        private int nbZombie;
         
 
 
@@ -74,13 +75,17 @@ namespace SAE_DEV.Screens
 
         public override void Initialize()
         {
+            // NOMBRE DE ZOMBIE EN FONCTION DE LA MAP
+            if (Game1._choixMap == 1)
+            {
+                nbZombie = 30;
+            }
+            else
+                nbZombie = 15;
+
             //Initialisation des zombie, du perso et de l'IA des zombies
             zombielvl1 = new Zombie[nbZombie];
             iazombie = new IAZombie[nbZombie];
-            
-            
-            Perso.Initialize();
-            
             
             // On fait spawn les zombies au bon endroit
             for (int i = 0; i < zombielvl1.Length; i++)
@@ -96,6 +101,11 @@ namespace SAE_DEV.Screens
                 }
                 iazombie[i] = new IAZombie(random.Next(40, 60), zombielvl1[i]);
             }
+            
+            
+            Perso.Initialize();
+            
+            
             
             //Initialisation du score
             _score = 0;
@@ -167,6 +177,7 @@ namespace SAE_DEV.Screens
             //Load des sons
             _ball = Content.Load<Song>("bruitBalle");
             _death = Content.Load<Song>("scream");
+            MediaPlayer.Volume = 0.1f; // Volume du son
             
 
             base.LoadContent();
@@ -252,7 +263,6 @@ namespace SAE_DEV.Screens
             }
             else
                 _affichePhraseInvinsible = false;
-            Console.WriteLine(_chronoInvincible);
             if(_chronoInvincible > 2)
             {
                 _EstInvincible = false;

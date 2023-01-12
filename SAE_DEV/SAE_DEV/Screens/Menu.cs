@@ -22,7 +22,7 @@ namespace SAE_DEV.Screens
         private Vector2 _posmapCapture2;
 
         private bool _isClicked;
-        private Song _menu;
+        private Song _menuMusique;
         private new Game1 Game => (Game1)base.Game;
 
         public Menu(Game1 game) : base(game)
@@ -52,8 +52,8 @@ namespace SAE_DEV.Screens
             _textureMap2 = Content.Load<Texture2D>("optionMap2");
             _map1 = Content.Load<Texture2D>("Map1Capture");
             _map2 = Content.Load<Texture2D>("Map2Capture");
-            _menu = Content.Load<Song>("Indian");
-            MediaPlayer.Play(_menu);
+            _menuMusique = Content.Load<Song>("musiqueIntro");
+            MediaPlayer.Play(_menuMusique);
 
             base.LoadContent();
         }
@@ -70,11 +70,13 @@ namespace SAE_DEV.Screens
             {
                 Game1._choixMap = 1;
                 Game.LoadMonde();
+                MediaPlayer.Stop();
             }
             else if (_positionClique.X > 741 && _positionClique.X < 896 && _positionClique.Y > 300 && _positionClique.Y < 423 && _isClicked == true)
             {
                 Game1._choixMap = 2;
                 Game.LoadMonde();
+                MediaPlayer.Stop();
             }
         }
         public override void Draw(GameTime gameTime) 
