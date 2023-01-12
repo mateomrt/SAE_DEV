@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="SAE_DEV.Game1">
+    <Position X="0.5" Y="4.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABABAGABwAAAAAAAAAAhAAEAAAiSAAAAgAAAAQ=</HashCode>
+      <FileName>Game\Game1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE_DEV.Screens.Menu">
+    <Position X="3.5" Y="4.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAACAAgAAyAQAAAAgIAAAAgQAAAEAKAAAAAAIAQ=</HashCode>
+      <FileName>Screens\Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE_DEV.Screens.Monde" Collapsed="true">
+    <Position X="5.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAYAABAALIAgAwAAIAAAARAAiAiIJAANAMQACgEYEAQ=</HashCode>
+      <FileName>Screens\Monde.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE_DEV.Screens.GameOver" Collapsed="true">
+    <Position X="12" Y="4" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAyAAAAAAAAAQAAgQgAAAAIABAAAAJAQ=</HashCode>
+      <FileName>Screens\GameOver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE_DEV.Camera" Collapsed="true">
+    <Position X="6.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAAAAAAAAAAAAACAAAAAAAACAAAAA=</HashCode>
+      <FileName>Features\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE_DEV.Perso" Collapsed="true">
+    <Position X="13.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAYAAAAwAABAAAAAECAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Sprites\Perso.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE_DEV.Zombie" Collapsed="true">
+    <Position X="7.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAIAAAAgAAAABIQAQAAAKAAAAACAEAAAAgAAQ=</HashCode>
+      <FileName>Sprites\Zombie.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE_DEV.Bullet" Collapsed="true">
+    <Position X="10.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAgAAAAAAAAAAgAAAAAAAEIhgAAAAA=</HashCode>
+      <FileName>Sprites\Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE_DEV.Touche" Collapsed="true">
+    <Position X="6.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Features\Touche.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE_DEV.IAZombie" Collapsed="true">
+    <Position X="7.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAEAAAAAAAAAAAAAABAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Features\IAZombie.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE_DEV.Collision" Collapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Features\Collision.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
