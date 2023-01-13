@@ -14,7 +14,7 @@ namespace SAE_DEV
         private int _vitesseZombie;
         private AnimatedSprite _spriteZombie;
         private string _animationZombie;
-        private Vector2 _directionZombie;
+        
 
 
         public Vector2 PositionZombie
@@ -69,18 +69,6 @@ namespace SAE_DEV
             }
         }
 
-        public Vector2 DirectionZombie
-        {
-            get
-            {
-                return this._directionZombie;
-            }
-
-            set
-            {
-                this._directionZombie = value;
-            }
-        }
 
         
         public void LoadContent(Game game)
@@ -111,10 +99,12 @@ namespace SAE_DEV
                 posvalide = true;
                 ushort tx = (ushort)(this.PositionZombie.X / Monde._tiledMap.TileWidth);
                 ushort ty = (ushort)(this.PositionZombie.Y / Monde._tiledMap.TileWidth);
+                //Teste de la collision avec les batiments
                 if (Collision.IsCollision(tx, ty))
                 {
                     posvalide = false;
                 }
+                //Teste de la distance avec le personnage 
                 if (Math.Sqrt(
                     Math.Pow(Perso._positionPerso.X - this.PositionZombie.X, 2) +
                     Math.Pow(Perso._positionPerso.Y - this.PositionZombie.Y, 2)) < 200)

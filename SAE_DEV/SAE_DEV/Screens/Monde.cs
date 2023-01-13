@@ -232,8 +232,10 @@ namespace SAE_DEV.Screens
             //Collision du perso avec le zombie et chrono de l'invincibilité         
             _chronoInvincible += 1 * deltaTime;
 
+            //On boucle sur le tableau de zombie
             for (int i = 0; i < zombielvl1.Length; i++)
             {
+                //On teste si la disatnce entre le perso et le zombie est < 10 et si le perso n'est pas invincible
                 if (Math.Sqrt(
                     Math.Pow(Perso._positionPerso.X - zombielvl1[i].PositionZombie.X, 2) + 
                     Math.Pow(Perso._positionPerso.Y - zombielvl1[i].PositionZombie.Y, 2)) < 10 && _EstInvincible == false)

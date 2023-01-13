@@ -21,7 +21,9 @@ namespace SAE_DEV
         
         public void Update(GameTime gameTime)
         {
-            if(Math.Sqrt(Math.Pow(Perso._positionPerso.X-zombie.PositionZombie.X, 2) + Math.Pow(Perso._positionPerso.Y-zombie.PositionZombie.Y, 2)) > 400)
+            //Calcul de la distance entre le zombie et le perso pour savoir si il doit se deplacer ou pas
+            if(Math.Sqrt(Math.Pow(Perso._positionPerso.X-zombie.PositionZombie.X, 2) + 
+                Math.Pow(Perso._positionPerso.Y-zombie.PositionZombie.Y, 2)) > 400)
             {
                 _speed = 0;
             }
